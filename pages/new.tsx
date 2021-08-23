@@ -3,7 +3,7 @@
 import Container from '../components/common/Container';
 import Header from '../components/common/Header';
 
-function Index() {
+function New() {
 	return (
 		<Container height='100vh'>
 			<Header />
@@ -11,4 +11,4 @@ function Index() {
 	);
 }
 
-export default Index;
+export default New;
