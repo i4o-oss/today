@@ -14,10 +14,12 @@
 		"@chakra-ui/theme-tools": "1.1.9",
 		"@emotion/react": "11.4.1",
 		"@emotion/styled": "11.3.0",
+		"@supabase/supabase-js": "^1.22.2",
 		"framer-motion": "^4.1.17",
 		"next": "11.1.0",
 		"next-connect": "^0.10.2",
 		"react": "^17.0.2",
+		"react-beautiful-dnd": "^13.1.0",
 		"react-dom": "^17.0.2",
 		"react-icons": "^4.2.0"
 	},
