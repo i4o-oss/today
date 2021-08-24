@@ -1,61 +1,44 @@
-import React from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import NextLink from 'next/link';
 import {
 	chakra,
+	Avatar,
+	Button,
 	Flex,
 	HStack,
-	Icon,
 	IconButton,
 	Link,
+	Menu,
+	MenuButton,
+	MenuDivider,
+	MenuItem,
+	MenuList,
+	Text,
 	useColorMode,
 	useColorModeValue,
-	Box,
 } from '@chakra-ui/react';
-import { FaMoon, FaSun, FaHeart } from 'react-icons/fa';
-import { AiFillGithub } from 'react-icons/ai';
+import { supabase } from '../../lib/supabaseClient';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
 function Header() {
+	const [session, setSession] = useState(null);
+	const [user, setUser] = useState(null);
 	const { toggleColorMode: toggleMode } = useColorMode();
 	const text = useColorModeValue('dark', 'light');
 	const SwitchIcon = useColorModeValue(FaMoon, FaSun);
 
-	const SponsorButton = (
-		<Box
-			display={{ base: 'none', md: 'flex' }}
-			alignItems='center'
-			as='a'
-			aria-label='Sponsor Choc UI on Open Collective'
-			href={''}
-			target='_blank'
-			rel='noopener noreferrer'
-			bg='gray.50'
-			borderWidth='1px'
-			borderColor='gray.200'
-			px='1em'
-			minH='36px'
-			rounded='md'
-			fontSize='sm'
-			color='gray.800'
-			outline='0'
-			transition='all 0.3s'
-			_hover={{
-				bg: 'gray.100',
-				borderColor: 'gray.300',
-			}}
-			_active={{
-				borderColor: 'gray.200',
-			}}
-			_focus={{
-				boxShadow: 'outline',
-			}}
-			ml={5}
-		>
-			<Icon as={FaHeart} w='4' h='4' color='red.500' mr='2' />
-			<Box as='strong' lineHeight='inherit' fontWeight='semibold'>
-				Sponsor
-			</Box>
-		</Box>
-	);
+	useEffect(() => {
+		setSession(supabase.auth.session());
+		setUser(supabase.auth.user());
+
+		supabase.auth.onAuthStateChange((event, session) => {
+			setSession(session);
+		});
+	}, []);
+
+	async function handleSignOut() {
+		await supabase.auth.signOut();
+	}
 
 	return (
 		<chakra.header
@@ -75,7 +58,8 @@ function Header() {
 					<Flex align='center'>
 						<Link href='/'>
 							<HStack>
-								<Image src='/logo.png' width={40} height={40} />
+								{/*<Image src='/logo.png' width={40} height={40} />*/}
+								<Text>Today</Text>
 							</HStack>
 						</Link>
 					</Flex>
@@ -91,32 +75,53 @@ function Header() {
 							spacing='5'
 							display={{ base: 'none', md: 'flex' }}
 						>
-							<Link
-								isExternal
-								aria-label='Go to Choc UI GitHub page'
-								href='https://github.com/opencatalysts/today'
-							>
-								<Icon
-									as={AiFillGithub}
-									display='block'
-									transition='color 0.2s'
-									w='5'
-									h='5'
-									_hover={{ color: 'gray.600' }}
-								/>
-							</Link>
+							<IconButton
+								size='md'
+								fontSize='lg'
+								aria-label={`Switch to ${text} mode`}
+								variant='ghost'
+								color='current'
+								onClick={toggleMode}
+								icon={<SwitchIcon />}
+							/>
+							{session && user ? (
+								<Menu placement='bottom-end'>
+									<MenuButton
+										as={Button}
+										p={0}
+										bg='transparent'
+										_hover={{ bg: 'transparent' }}
+										_active={{ bg: 'transparent' }}
+										_focus={{ bg: 'transparent' }}
+									>
+										<Avatar
+											size='md'
+											name='Ilango Rajagopal'
+											src='https://bit.ly/tioluwani-kolawole'
+										/>
+									</MenuButton>
+									<MenuList>
+										<MenuItem>
+											<NextLink href='/app/settings/profile'>
+												Settings
+											</NextLink>
+										</MenuItem>
+										<MenuDivider />
+										<MenuItem onClick={handleSignOut}>
+											Logout
+										</MenuItem>
+									</MenuList>
+								</Menu>
+							) : (
+								<Button
+									colorScheme='brand'
+									size='sm'
+									variant='solid'
+								>
+									Sign In
+								</Button>
+							)}
 						</HStack>
-						<IconButton
-							size='md'
-							fontSize='lg'
-							aria-label={`Switch to ${text} mode`}
-							variant='ghost'
-							color='current'
-							ml={{ base: '0', md: '3' }}
-							onClick={toggleMode}
-							icon={<SwitchIcon />}
-						/>
-						{SponsorButton}
 					</Flex>
 				</Flex>
 			</chakra.div>
