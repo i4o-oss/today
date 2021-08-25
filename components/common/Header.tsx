@@ -48,13 +48,7 @@ function Header() {
 			overflowY='hidden'
 		>
 			<chakra.div h='4.5rem' mx='auto' maxW='container.lg'>
-				<Flex
-					w='full'
-					h='full'
-					px='6'
-					align='center'
-					justify='space-between'
-				>
+				<Flex w='full' h='full' align='center' justify='space-between'>
 					<Flex align='center'>
 						<Link href='/'>
 							<HStack>

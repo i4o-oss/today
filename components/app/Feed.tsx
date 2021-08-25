@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { chakra } from '@chakra-ui/react';
+import { chakra, Flex } from '@chakra-ui/react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import RSS from '../blocks/RSS';
+import { reorder } from '../../lib/utils';
 
 function Feed() {
 	const initial = [
@@ -32,15 +33,7 @@ function Feed() {
 	];
 	const [feeds, setFeeds] = useState(initial);
 
-	const reorder = (list, startIndex, endIndex) => {
-		const result = [...list];
-		const [removed] = result.splice(startIndex, 1);
-		result.splice(endIndex, 0, removed);
-
-		return result;
-	};
-
-	function onDragEnd(result) {
+	const onDragEnd = (result) => {
 		if (!result.destination) {
 			return;
 		}
@@ -56,31 +49,42 @@ function Feed() {
 		);
 
 		setFeeds(updatedFeeds);
-	}
+	};
 
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId='today'>
-				{(provided) => (
-					<chakra.div
-						w='full'
-						maxW='container.lg'
-						ref={provided.innerRef}
-						{...provided.droppableProps}
-					>
-						{feeds.map((feed, index) => (
-							<RSS
-								id={feed.id}
-								index={index}
-								key={feed.id}
-								content={feed.content}
-							/>
-						))}
-						{provided.placeholder}
-					</chakra.div>
-				)}
-			</Droppable>
-		</DragDropContext>
+		<Flex
+			w='full'
+			maxW='container.lg'
+			px={4}
+			py={32}
+			flexDirection='column'
+			alignItems='center'
+			justifyContent='start'
+			overflow='visible'
+		>
+			<DragDropContext onDragEnd={onDragEnd}>
+				<Droppable droppableId='today'>
+					{(provided) => (
+						<chakra.div
+							w='full'
+							maxW='container.lg'
+							ref={provided.innerRef}
+							{...provided.droppableProps}
+						>
+							{feeds.map((feed, index) => (
+								<RSS
+									id={feed.id}
+									index={index}
+									key={feed.id}
+									content={feed.content}
+								/>
+							))}
+							{provided.placeholder}
+						</chakra.div>
+					)}
+				</Droppable>
+			</DragDropContext>
+		</Flex>
 	);
 }
 

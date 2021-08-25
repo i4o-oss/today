@@ -20,6 +20,7 @@ function Index() {
 		<Container height='100vh'>
 			<Header />
 			{session ? <Feed /> : <LandingPage />}
+			{/*<Feed />*/}
 		</Container>
 	);
 }
