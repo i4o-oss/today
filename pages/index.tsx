@@ -7,7 +7,7 @@ function Index() {
 	const initial = Object.keys(today?.blocks);
 	const [blocks, setBlocks] = useState(initial);
 
-	const updateBlocks = (order) => {
+	const updateBlocks = (order: string[]) => {
 		setBlocks(order);
 		today.order = order;
 	};
