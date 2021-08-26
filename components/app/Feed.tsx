@@ -1,37 +1,16 @@
-import { useState } from 'react';
-import { chakra, Flex } from '@chakra-ui/react';
+import { chakra, Flex, Heading } from '@chakra-ui/react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import RSS from '../blocks/RSS';
 import { reorder } from '../../lib/utils';
+import today from '../../today.config';
 
-function Feed() {
-	const initial = [
-		{
-			id: 'a',
-			content: 'Card 0',
-		},
-		{
-			id: 'b',
-			content: 'Card 1',
-		},
-		{
-			id: 'c',
-			content: 'Card 2',
-		},
-		{
-			id: 'd',
-			content: 'Card 3',
-		},
-		{
-			id: 'e',
-			content: 'Card 4',
-		},
-		{
-			id: 'f',
-			content: 'Card 5',
-		},
-	];
-	const [feeds, setFeeds] = useState(initial);
+interface Feed {
+	blocks: string[];
+	updateBlocks: (order: string[]) => void;
+}
+
+function Feed(props: Feed): JSX.Element {
+	const { blocks, updateBlocks } = props;
 
 	const onDragEnd = (result) => {
 		if (!result.destination) {
@@ -43,25 +22,27 @@ function Feed() {
 		}
 
 		const updatedFeeds = reorder(
-			feeds,
+			blocks,
 			result.source.index,
 			result.destination.index
 		);
 
-		setFeeds(updatedFeeds);
+		updateBlocks(updatedFeeds);
 	};
 
 	return (
 		<Flex
 			w='full'
 			maxW='container.lg'
-			px={4}
 			py={32}
 			flexDirection='column'
-			alignItems='center'
+			alignItems='start'
 			justifyContent='start'
 			overflow='visible'
 		>
+			<Heading as='h1' size='4xl' mb={16}>
+				Today
+			</Heading>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable droppableId='today'>
 					{(provided) => (
@@ -71,14 +52,36 @@ function Feed() {
 							ref={provided.innerRef}
 							{...provided.droppableProps}
 						>
-							{feeds.map((feed, index) => (
-								<RSS
-									id={feed.id}
-									index={index}
-									key={feed.id}
-									content={feed.content}
-								/>
-							))}
+							{blocks.map((block, index) => {
+								switch (block) {
+									case 'date': {
+										break;
+									}
+
+									case 'weather': {
+										break;
+									}
+
+									case 'rss': {
+										const { rss } = today?.blocks;
+										const { feeds, name, size } = rss;
+										return (
+											<RSS
+												block={block}
+												feeds={feeds}
+												key={index}
+												index={index}
+												name={name}
+												size={size}
+											/>
+										);
+									}
+
+									case 'hackernews': {
+										break;
+									}
+								}
+							})}
 							{provided.placeholder}
 						</chakra.div>
 					)}

@@ -1,29 +1,18 @@
 import {
-	Button,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
 	ModalContent,
-	ModalFooter,
-	ModalHeader,
 	ModalOverlay,
 } from '@chakra-ui/react';
 
-function AddBlockModal(props) {
+function AddBlockModal(props): JSX.Element {
 	return (
 		<Modal isOpen={props.isOpen} onClose={props.onClose} isCentered={true}>
 			<ModalOverlay />
 			<ModalContent>
-				<ModalHeader>Modal Title</ModalHeader>
 				<ModalCloseButton />
-				<ModalBody>Test</ModalBody>
-
-				<ModalFooter>
-					<Button colorScheme='blue' mr={3} onClick={props.onClose}>
-						Close
-					</Button>
-					<Button variant='ghost'>Secondary Action</Button>
-				</ModalFooter>
+				<ModalBody></ModalBody>
 			</ModalContent>
 		</Modal>
 	);
