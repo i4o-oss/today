@@ -1,26 +1,22 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { useState } from 'react';
 import Container from '../components/common/Container';
-import Header from '../components/common/Header';
-import LandingPage from '../components/common/LandingPage';
 import Feed from '../components/app/Feed';
+import today from '../today.config';
 
 function Index() {
-	const [session, setSession] = useState(null);
+	const initial = Object.keys(today?.blocks);
+	const [blocks, setBlocks] = useState(initial);
 
-	useEffect(() => {
-		setSession(supabase.auth.session());
-
-		supabase.auth.onAuthStateChange((event, session) => {
-			setSession(session);
-		});
-	}, []);
+	const updateBlocks = (order) => {
+		setBlocks(order);
+		today.order = order;
+	};
 
 	return (
 		<Container height='100vh'>
-			<Header />
-			{session ? <Feed /> : <LandingPage />}
-			{/*<Feed />*/}
+			{/*<Header />*/}
+			{/*{session ? <Feed /> : <LandingPage />}*/}
+			<Feed blocks={blocks} updateBlocks={updateBlocks} />
 		</Container>
 	);
 }
