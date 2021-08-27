@@ -1,7 +1,7 @@
 import nc from 'next-connect';
 import FeedParser from 'feedparser';
 import fetch from "node-fetch";
-import { endOfDay, format, getUnixTime, startOfDay } from 'date-fns';
+import { endOfDay, getUnixTime, startOfDay } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { convert } from 'html-to-text';
 import today from '../../today.config';
@@ -25,7 +25,15 @@ export function latestPost(req, res) {
                 let post;
                 while(post = this.read()) {
                     if (post) {
-                        posts.push({ title: post.title, date: post.date, link: post.link, summary: convert(post.summary) });
+                        const publishDate = new Date(post.date);
+                        const publishDateInLocalTime = utcToZonedTime(publishDate, today?.timezone);
+                        // @ts-ignore
+                        posts.push({
+                            title: post.title,
+                            date: publishDateInLocalTime,
+                            link: post.link,
+                            summary: convert(post.summary)
+                        });
                     }
                 }
             })
@@ -36,7 +44,7 @@ export function latestPost(req, res) {
                 const todayEnd = getUnixTime(endOfDay(now));
 
                 const latest = posts.filter(post => {
-                    const postPublishDate = getUnixTime(utcToZonedTime(post?.date, today?.timezone));
+                    const postPublishDate = getUnixTime(post?.date);
                     return postPublishDate >= todayStart && postPublishDate <= todayEnd;
                 });
 
