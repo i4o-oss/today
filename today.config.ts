@@ -47,6 +47,6 @@ export default {
             location: 'bangalore'
         },
     },
-    order: [],
+    order: [ 'date', 'weather', 'rss', 'hackernews', 'podcasts', 'pocket', 'readwise' ],
     timezone: 'Asia/Kolkata'
 }

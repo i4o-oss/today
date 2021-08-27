@@ -4,8 +4,7 @@ import Feed from '../components/app/Feed';
 import today from '../today.config';
 
 function Index() {
-	const initial = Object.keys(today?.blocks);
-	const [blocks, setBlocks] = useState(initial);
+	const [blocks, setBlocks] = useState(today?.order);
 
 	const updateBlocks = (order: string[]) => {
 		setBlocks(order);
