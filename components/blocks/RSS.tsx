@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
-	chakra,
 	Flex,
+	GridItem,
 	Heading,
 	Link,
+	Spinner,
 	useColorModeValue,
 } from '@chakra-ui/react';
 import { Draggable } from 'react-beautiful-dnd';
@@ -55,37 +56,38 @@ function RSS(props: RSS) {
 			});
 	}, []);
 
+	let BlockElement = null;
+	if (isLoading && articles.length === 0) {
+		BlockElement = (
+			<Flex w='full' p={4} alignItems='center' justifyContent='center'>
+				<Spinner />
+			</Flex>
+		);
+	} else if (!isLoading && articles.length > 0) {
+		BlockElement = (
+			<>
+				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
+					{name}
+				</Heading>
+				{articles.map((article, index) => (
+					<Article
+						key={index}
+						date={article?.date}
+						link={article?.link}
+						summary={article?.summary}
+						title={article?.title}
+					/>
+				))}
+			</>
+		);
+	}
+
 	return (
-		<Draggable draggableId={block} index={index}>
-			{(provided) => (
-				<div
-					ref={provided.innerRef}
-					{...provided.draggableProps}
-					{...provided.dragHandleProps}
-				>
-					<chakra.div w='100%' py={4} style={{ marginBottom: '8px' }}>
-						<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
-							{name}
-						</Heading>
-						{isLoading && articles.length === 0 ? (
-							<div>Loading...</div>
-						) : (
-							<>
-								{articles.map((article, index) => (
-									<Article
-										key={index}
-										date={article?.date}
-										link={article?.link}
-										summary={article?.summary}
-										title={article?.title}
-									/>
-								))}
-							</>
-						)}
-					</chakra.div>
-				</div>
-			)}
-		</Draggable>
+		<GridItem colSpan={2}>
+			<Flex w='full' py={4} style={{ marginBottom: '8px' }}>
+				{BlockElement}
+			</Flex>
+		</GridItem>
 	);
 }
 
