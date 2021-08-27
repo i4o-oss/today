@@ -1,8 +1,10 @@
-import { chakra, Flex, Heading } from '@chakra-ui/react';
+import { Flex, Grid, Heading } from '@chakra-ui/react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import RSS from '../blocks/RSS';
 import { reorder } from '../../lib/utils';
 import today from '../../today.config';
+import TodayDate from '../blocks/TodayDate';
+import Weather from '../blocks/Weather';
 
 interface Feed {
 	blocks: string[];
@@ -40,26 +42,28 @@ function Feed(props: Feed): JSX.Element {
 			justifyContent='start'
 			overflow='visible'
 		>
-			<Heading as='h1' size='4xl' mb={16}>
+			<Heading as='h1' fontSize='8xl' fontWeight='thin' mb={16}>
 				Today
 			</Heading>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable droppableId='today'>
 					{(provided) => (
-						<chakra.div
-							w='full'
+						<Grid
+							gap={4}
 							maxW='container.lg'
+							templateColumns='repeat(2, 1fr)'
+							w='full'
 							ref={provided.innerRef}
 							{...provided.droppableProps}
 						>
 							{blocks.map((block, index) => {
 								switch (block) {
 									case 'date': {
-										break;
+										return <TodayDate key={index} />;
 									}
 
 									case 'weather': {
-										break;
+										return <Weather key={index} />;
 									}
 
 									case 'rss': {
@@ -83,7 +87,7 @@ function Feed(props: Feed): JSX.Element {
 								}
 							})}
 							{provided.placeholder}
-						</chakra.div>
+						</Grid>
 					)}
 				</Droppable>
 			</DragDropContext>
