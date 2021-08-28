@@ -38,6 +38,7 @@ export default {
                 'https://stratechery.com/feed/',
                 'http://firstround.com/review/feed.xml',
                 'http://feeds.feedburner.com/codinghorror/',
+                'https://swyx.io/rss.xml',
                 'https://thesephist.com/index.xml'
             ],
             name: 'Latest Articles',
