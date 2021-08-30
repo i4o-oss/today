@@ -12,15 +12,13 @@ import Article from "../common/Article";
 // import { Draggable } from 'react-beautiful-dnd';
 
 interface RSS {
-	block: string;
-	feeds: string[];
-	index: number;
-	name: string;
-	size: number;
+	feeds: string[],
+	name: string,
+	size: number
 }
 
 export default function RSS(props: RSS) {
-	const { block, feeds, index, name, size } = props;
+	const { feeds, name, size } = props;
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
