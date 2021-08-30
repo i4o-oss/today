@@ -17,28 +17,28 @@ import {
 	useColorMode,
 	useColorModeValue,
 } from '@chakra-ui/react';
-import { supabase } from '../../lib/supabaseClient';
+// import { supabase } from '../../lib/supabaseClient';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 function Header() {
-	const [session, setSession] = useState(null);
-	const [user, setUser] = useState(null);
+	// const [session, setSession] = useState(null);
+	// const [user, setUser] = useState(null);
 	const { toggleColorMode: toggleMode } = useColorMode();
 	const text = useColorModeValue('dark', 'light');
 	const SwitchIcon = useColorModeValue(FaMoon, FaSun);
 
-	useEffect(() => {
-		setSession(supabase.auth.session());
-		setUser(supabase.auth.user());
-
-		supabase.auth.onAuthStateChange((event, session) => {
-			setSession(session);
-		});
-	}, []);
-
-	async function handleSignOut() {
-		await supabase.auth.signOut();
-	}
+	// useEffect(() => {
+	// 	setSession(supabase.auth.session());
+	// 	setUser(supabase.auth.user());
+	//
+	// 	supabase.auth.onAuthStateChange((event, session) => {
+	// 		setSession(session);
+	// 	});
+	// }, []);
+	//
+	// async function handleSignOut() {
+	// 	await supabase.auth.signOut();
+	// }
 
 	return (
 		<chakra.header
@@ -48,8 +48,8 @@ function Header() {
 			overflowY='hidden'
 		>
 			<chakra.div h='4.5rem' mx='auto' maxW='container.lg'>
-				<Flex w='full' h='full' align='center' justify='space-between'>
-					<Flex align='center'>
+				<Flex w='full' h='full' align='center' justify='flex-end'>
+					<Flex d='none' align='center'>
 						<Link href='/'>
 							<HStack>
 								{/*<Image src='/logo.png' width={40} height={40} />*/}
@@ -78,7 +78,7 @@ function Header() {
 								onClick={toggleMode}
 								icon={<SwitchIcon />}
 							/>
-							{session && user ? (
+							{/* {session && user ? (
 								<Menu placement='bottom-end'>
 									<MenuButton
 										as={Button}
@@ -114,7 +114,7 @@ function Header() {
 								>
 									Sign In
 								</Button>
-							)}
+							)} */}
 						</HStack>
 					</Flex>
 				</Flex>

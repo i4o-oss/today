@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Container from '../components/common/Container';
+import Header from "../components/common/Header";
 import Feed from '../components/app/Feed';
 import today from '../today.config';
 
@@ -13,7 +14,7 @@ function Index() {
 
 	return (
 		<Container height='100vh'>
-			{/*<Header />*/}
+			<Header />
 			{/*{session ? <Feed /> : <LandingPage />}*/}
 			<Feed blocks={blocks} updateBlocks={updateBlocks} />
 		</Container>
