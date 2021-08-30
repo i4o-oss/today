@@ -23,7 +23,7 @@ import { IoAddSharp, IoSettingsSharp } from 'react-icons/io5';
 import Container from '../components/common/Container';
 import Header from '../components/common/Header';
 import { reorder } from '../lib/utils';
-import RSS from '../components/blocks/RSS';
+// import RSS from '../components/blocks/RSS';
 import AddBlockModal from '../components/app/AddBlockModal';
 import FeedSettingsModal from '../components/app/FeedSettingsModal';
 
@@ -141,12 +141,7 @@ function New() {
 							>
 								{blocks.map((block, index) => (
 									<>
-										<RSS
-											id={block.id}
-											index={index}
-											key={block.id}
-											content={block.content}
-										/>
+										<div>Block</div>
 									</>
 								))}
 								<Flex
