@@ -9,7 +9,7 @@ import today from '../../today.config';
 export function latestPost(req, res) {
     const url = decodeURIComponent(req.query.url);
     const posts = [];
-    let meta = null;
+    // let meta = null;
 
     fetch(url)
         .then(feed => {
@@ -23,10 +23,12 @@ export function latestPost(req, res) {
             // });
             feedparser.on('readable', function() {
                 let post;
+                // eslint-disable-next-line no-cond-assign
                 while(post = this.read()) {
                     if (post) {
                         const publishDate = new Date(post.date);
                         const publishDateInLocalTime = utcToZonedTime(publishDate, today?.timezone);
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         posts.push({
                             title: post.title,

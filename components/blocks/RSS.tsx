@@ -5,10 +5,11 @@ import {
 	Heading,
 	Link,
 	Spinner,
+	Text,
 	useColorModeValue,
 } from '@chakra-ui/react';
-import { Draggable } from 'react-beautiful-dnd';
-import truncate from 'lodash.truncate';
+import Article from "../common/Article";
+// import { Draggable } from 'react-beautiful-dnd';
 
 interface RSS {
 	block: string;
@@ -18,7 +19,7 @@ interface RSS {
 	size: number;
 }
 
-function RSS(props: RSS) {
+export default function RSS(props: RSS) {
 	const { block, feeds, index, name, size } = props;
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -27,11 +28,8 @@ function RSS(props: RSS) {
 		async function fetchArticles() {
 			const latestArray = await Promise.all(
 				feeds.map(async (url) => {
-					const response = await fetch(
-						`/api/rss?url=${encodeURIComponent(
-							url.toString()
-						)}&size=${size}`
-					);
+					const encodedUrl = encodeURIComponent(url.toString());
+					const response = await fetch(`/api/rss?url=${encodedUrl}&size=${size}`);
 					const data = await response.json();
 
 					if (data.latest) {
@@ -84,42 +82,9 @@ function RSS(props: RSS) {
 
 	return (
 		<GridItem colSpan={2}>
-			<Flex w='full' py={4} style={{ marginBottom: '8px' }}>
+			<Flex w='full' flexDirection='column' style={{ marginBottom: '8px' }}>
 				{BlockElement}
 			</Flex>
 		</GridItem>
 	);
 }
-
-interface Article {
-	date: string;
-	link: string;
-	summary: string;
-	title: string;
-}
-
-function Article(props: Article) {
-	const { date, link, summary, title } = props;
-
-	return (
-		<Link isExternal={true} href={link} _hover={{ textDecoration: 'none' }}>
-			<Flex
-				flexDirection='column'
-				p={6}
-				mb={4}
-				borderWidth={1}
-				borderStyle='solid'
-				borderColor={useColorModeValue('gray.600', 'gray.400')}
-				borderRadius='lg'
-			>
-				<Heading as='h4' fontSize='xl' mb={4}>
-					{title}
-				</Heading>
-				<span>{truncate(summary, { length: 280 })}</span>
-				<span>{date}</span>
-			</Flex>
-		</Link>
-	);
-}
-
-export default RSS;
