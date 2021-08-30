@@ -39,7 +39,8 @@ export default {
                 'http://firstround.com/review/feed.xml',
                 'http://feeds.feedburner.com/codinghorror/',
                 'https://swyx.io/rss.xml',
-                'https://thesephist.com/index.xml'
+                'https://thesephist.com/index.xml',
+                'http://dailystoic.com/feed/'
             ],
             name: 'Latest Articles',
             size: 1
