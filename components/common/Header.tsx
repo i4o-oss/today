@@ -26,7 +26,7 @@ interface HeaderProps {
 	user: Record<string, unknown>
 }
 
-function Header(props: HeaderProps) {
+function Header(props: HeaderProps): JSX.Element {
 	const { session, user } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { toggleColorMode: toggleMode } = useColorMode();

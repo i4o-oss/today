@@ -9,7 +9,6 @@ import {
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
     ModalBody,
     ModalCloseButton,
     Text,
@@ -17,7 +16,7 @@ import {
     chakra,
     useBoolean
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import { Field, Formik } from "formik";
 import { supabase } from "../../lib/supabaseClient";
 
 interface AuthModalProps {
@@ -25,7 +24,7 @@ interface AuthModalProps {
     onClose: () => void
 }
 
-export default function Auth(props: AuthModalProps) {
+export default function Auth(props: AuthModalProps): JSX.Element {
     const [loading, setLoading] = useBoolean();
     const emailFieldRef = useRef();
     const { isOpen, onClose } = props;
@@ -47,7 +46,6 @@ export default function Auth(props: AuthModalProps) {
         <Modal initialFocusRef={emailFieldRef} isCentered={true} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader></ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <VStack py={6} spacing={2}>
