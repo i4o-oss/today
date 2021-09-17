@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
 	chakra,
 	Button,
@@ -8,13 +8,6 @@ import {
 	HStack,
 	IconButton,
 	Input,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
 	Switch,
 	useDisclosure,
 } from '@chakra-ui/react';
@@ -23,11 +16,11 @@ import { IoAddSharp, IoSettingsSharp } from 'react-icons/io5';
 import Container from '../components/common/Container';
 import Header from '../components/common/Header';
 import { reorder } from '../lib/utils';
-// import RSS from '../components/blocks/RSS';
 import AddBlockModal from '../components/app/AddBlockModal';
 import FeedSettingsModal from '../components/app/FeedSettingsModal';
+import {supabase} from "../lib/supabaseClient";
 
-function New() {
+function New(): JSX.Element {
 	const {
 		isOpen: isSettingsOpen,
 		onOpen: onSettingsOpen,
@@ -38,8 +31,22 @@ function New() {
 		onOpen: onAddBlockOpen,
 		onClose: onAddBlockClose,
 	} = useDisclosure();
+	const [session, setSession] = useState(undefined);
+	const [user, setUser] = useState(undefined);
 	const [mode, setMode] = useState('edit');
 	const [blocks, setBlocks] = useState([]);
+
+	useEffect(() => {
+		setUser(supabase.auth.user());
+
+		supabase.auth.onAuthStateChange((event, session) => {
+			setSession(session);
+		});
+	}, []);
+
+	useEffect(() => {
+		setSession(supabase.auth.session());
+	}, [user]);
 
 	const onDragEnd = (result) => {
 		if (!result.destination) {
@@ -69,7 +76,7 @@ function New() {
 
 	return (
 		<Container height='100vh'>
-			<Header />
+			<Header session={session} user={user} />
 			<Flex
 				w='full'
 				maxW='container.lg'
@@ -140,9 +147,7 @@ function New() {
 								{...provided.droppableProps}
 							>
 								{blocks.map((block, index) => (
-									<>
-										<div>Block</div>
-									</>
+									<div key={index}>{`Block: ${block}`}</div>
 								))}
 								<Flex
 									w='full'
