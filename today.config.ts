@@ -40,7 +40,11 @@ export default {
                 'http://feeds.feedburner.com/codinghorror/',
                 'https://swyx.io/rss.xml',
                 'https://thesephist.com/index.xml',
-                'http://dailystoic.com/feed/'
+                'http://dailystoic.com/feed/',
+                'https://www.lpalmieri.com/rss.xml',
+                'https://www.lpalmieri.com/rss.xml',
+                'https://fasterthanli.me/index.xml',
+
             ],
             name: 'Latest Articles',
             size: 1
