@@ -6,7 +6,10 @@
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
-		"start": "next start"
+		"start": "next start",
+		"prepare": "husky install",
+		"lint": "eslint ./ --ext js,jsx,ts,tsx",
+		"prettier": "prettier --write ./**/*.{js,jsx,ts,tsx}"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^1.0.15",

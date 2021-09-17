@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 import {
 	chakra,
 	Avatar,
@@ -15,15 +15,15 @@ import {
 	Text,
 	useColorMode,
 	useColorModeValue,
-	useDisclosure
+	useDisclosure,
 } from '@chakra-ui/react';
-import Auth from "./Auth";
+import Auth from './Auth';
 import { supabase } from '../../lib/supabaseClient';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 interface HeaderProps {
-	session: Record<string, unknown>,
-	user: Record<string, unknown>
+	session: Record<string, unknown>;
+	user: Record<string, unknown>;
 }
 
 function Header(props: HeaderProps): JSX.Element {
@@ -50,7 +50,9 @@ function Header(props: HeaderProps): JSX.Element {
 						<Link href='/'>
 							<HStack spacing={2}>
 								<Image src='/logo.png' width={40} height={40} />
-								<Text fontSize='xl' fontWeight='semibold'>Today</Text>
+								<Text fontSize='xl' fontWeight='semibold'>
+									Today
+								</Text>
 							</HStack>
 						</Link>
 					</Flex>
@@ -98,7 +100,11 @@ function Header(props: HeaderProps): JSX.Element {
 										</MenuItem>
 										<MenuDivider m={0} />
 										<MenuItem>
-											<Button onClick={handleSignOut} p={0} variant='ghost'>
+											<Button
+												onClick={handleSignOut}
+												p={0}
+												variant='ghost'
+											>
 												Sign Out
 											</Button>
 										</MenuItem>

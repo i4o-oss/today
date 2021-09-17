@@ -1,10 +1,10 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../components/common/Container';
-import Header from "../components/common/Header";
-import LandingPage from "../components/common/LandingPage";
+import Header from '../components/common/Header';
+import LandingPage from '../components/common/LandingPage';
 import Feed from '../components/app/Feed';
 import today from '../today.config';
-import {supabase} from "../lib/supabaseClient";
+import { supabase } from '../lib/supabaseClient';
 
 function Index() {
 	const [session, setSession] = useState(undefined);
@@ -31,7 +31,11 @@ function Index() {
 	return (
 		<Container height='100vh'>
 			<Header session={session} user={user} />
-			{session ? <Feed blocks={blocks} updateBlocks={updateBlocks} /> : <LandingPage />}
+			{session ? (
+				<Feed blocks={blocks} updateBlocks={updateBlocks} />
+			) : (
+				<LandingPage />
+			)}
 		</Container>
 	);
 }

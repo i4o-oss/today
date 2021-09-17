@@ -2,8 +2,8 @@ import { Flex, Grid, Heading } from '@chakra-ui/react';
 import TodayDate from '../blocks/TodayDate';
 import Weather from '../blocks/Weather';
 import RSS from '../blocks/RSS';
-import HackerNews from "../blocks/HackerNews";
-import Podcasts from "../blocks/Podcasts";
+import HackerNews from '../blocks/HackerNews';
+import Podcasts from '../blocks/Podcasts';
 import today from '../../today.config';
 
 interface Feed {
@@ -60,7 +60,12 @@ function Feed(props: Feed): JSX.Element {
 							const { hackernews } = today?.blocks;
 							const { name, size, url } = hackernews;
 							return (
-								<HackerNews key={index} name={name} size={size} url={url} />
+								<HackerNews
+									key={index}
+									name={name}
+									size={size}
+									url={url}
+								/>
 							);
 						}
 

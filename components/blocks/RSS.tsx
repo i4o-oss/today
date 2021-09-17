@@ -8,13 +8,13 @@ import {
 	Text,
 	useColorModeValue,
 } from '@chakra-ui/react';
-import Article from "../common/Article";
+import Article from '../common/Article';
 // import { Draggable } from 'react-beautiful-dnd';
 
 interface RSS {
-	feeds: string[],
-	name: string,
-	size: number
+	feeds: string[];
+	name: string;
+	size: number;
 }
 
 export default function RSS(props: RSS) {
@@ -27,7 +27,9 @@ export default function RSS(props: RSS) {
 			const latestArray = await Promise.all(
 				feeds.map(async (url) => {
 					const encodedUrl = encodeURIComponent(url.toString());
-					const response = await fetch(`/api/rss?url=${encodedUrl}&size=${size}`);
+					const response = await fetch(
+						`/api/rss?url=${encodedUrl}&size=${size}`
+					);
 					const data = await response.json();
 
 					if (data.latest) {
@@ -80,7 +82,11 @@ export default function RSS(props: RSS) {
 
 	return (
 		<GridItem colSpan={2}>
-			<Flex w='full' flexDirection='column' style={{ marginBottom: '8px' }}>
+			<Flex
+				w='full'
+				flexDirection='column'
+				style={{ marginBottom: '8px' }}
+			>
 				{BlockElement}
 			</Flex>
 		</GridItem>
