@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import NextLink from 'next/link';
+import Image from "next/image";
 import {
 	chakra,
 	Avatar,
@@ -16,29 +15,27 @@ import {
 	Text,
 	useColorMode,
 	useColorModeValue,
+	useDisclosure
 } from '@chakra-ui/react';
-// import { supabase } from '../../lib/supabaseClient';
+import Auth from "./Auth";
+import { supabase } from '../../lib/supabaseClient';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
-function Header() {
-	// const [session, setSession] = useState(null);
-	// const [user, setUser] = useState(null);
+interface HeaderProps {
+	session: Record<string, unknown>,
+	user: Record<string, unknown>
+}
+
+function Header(props: HeaderProps) {
+	const { session, user } = props;
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { toggleColorMode: toggleMode } = useColorMode();
 	const text = useColorModeValue('dark', 'light');
 	const SwitchIcon = useColorModeValue(FaMoon, FaSun);
 
-	// useEffect(() => {
-	// 	setSession(supabase.auth.session());
-	// 	setUser(supabase.auth.user());
-	//
-	// 	supabase.auth.onAuthStateChange((event, session) => {
-	// 		setSession(session);
-	// 	});
-	// }, []);
-	//
-	// async function handleSignOut() {
-	// 	await supabase.auth.signOut();
-	// }
+	async function handleSignOut() {
+		await supabase.auth.signOut();
+	}
 
 	return (
 		<chakra.header
@@ -47,13 +44,13 @@ function Header() {
 			w='full'
 			overflowY='hidden'
 		>
-			<chakra.div h='4.5rem' mx='auto' maxW='container.lg'>
-				<Flex w='full' h='full' align='center' justify='flex-end'>
-					<Flex d='none' align='center'>
+			<chakra.div h='24' mx='auto' maxW='container.lg'>
+				<Flex w='full' h='full' align='center' justify='space-between'>
+					<Flex align='center'>
 						<Link href='/'>
-							<HStack>
-								{/*<Image src='/logo.png' width={40} height={40} />*/}
-								<Text>Today</Text>
+							<HStack spacing={2}>
+								<Image src='/logo.png' width={40} height={40} />
+								<Text fontSize='xl' fontWeight='semibold'>Today</Text>
 							</HStack>
 						</Link>
 					</Flex>
@@ -78,7 +75,7 @@ function Header() {
 								onClick={toggleMode}
 								icon={<SwitchIcon />}
 							/>
-							{/* {session && user ? (
+							{session && user ? (
 								<Menu placement='bottom-end'>
 									<MenuButton
 										as={Button}
@@ -89,32 +86,37 @@ function Header() {
 										_focus={{ bg: 'transparent' }}
 									>
 										<Avatar
-											size='md'
+											size='sm'
 											name='Ilango Rajagopal'
-											src='https://bit.ly/tioluwani-kolawole'
 										/>
 									</MenuButton>
-									<MenuList>
+									<MenuList p={0}>
 										<MenuItem>
-											<NextLink href='/app/settings/profile'>
+											<Button p={0} variant='ghost'>
 												Settings
-											</NextLink>
+											</Button>
 										</MenuItem>
-										<MenuDivider />
-										<MenuItem onClick={handleSignOut}>
-											Logout
+										<MenuDivider m={0} />
+										<MenuItem>
+											<Button onClick={handleSignOut} p={0} variant='ghost'>
+												Sign Out
+											</Button>
 										</MenuItem>
 									</MenuList>
 								</Menu>
 							) : (
-								<Button
-									colorScheme='brand'
-									size='sm'
-									variant='solid'
-								>
-									Sign In
-								</Button>
-							)} */}
+								<>
+									<Button
+										colorScheme='brand'
+										onClick={onOpen}
+										size='sm'
+										variant='solid'
+									>
+										Sign In
+									</Button>
+									<Auth isOpen={isOpen} onClose={onClose} />
+								</>
+							)}
 						</HStack>
 					</Flex>
 				</Flex>

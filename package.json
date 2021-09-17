@@ -18,6 +18,7 @@
 		"date-fns": "^2.23.0",
 		"date-fns-tz": "^1.1.6",
 		"feedparser": "^2.2.10",
+		"formik": "^2.2.9",
 		"framer-motion": "^4.1.17",
 		"html-to-text": "^8.0.0",
 		"lodash.truncate": "^4.4.2",
