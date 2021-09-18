@@ -8,6 +8,7 @@ import YearProgress from '../configuration/YearProgress';
 import Readwise from '../configuration/Readwise';
 import Pocket from '../configuration/Pocket';
 import Weather from '../configuration/Weather';
+import Dev from '../configuration/Dev';
 
 interface ConfigureBlockProps {
 	block: Source;
@@ -62,6 +63,11 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 
 		case 'weather': {
 			currentConfigurationBlock = <Weather saveBlock={saveBlock} />;
+			break;
+		}
+
+		case 'dev': {
+			currentConfigurationBlock = <Dev saveBlock={saveBlock} />;
 			break;
 		}
 
