@@ -6,6 +6,7 @@ import {
 	Grid,
 	Heading,
 	Icon,
+	IconButton,
 	Input,
 	Modal,
 	ModalBody,
@@ -17,6 +18,7 @@ import {
 	VStack,
 	useColorModeValue,
 } from '@chakra-ui/react';
+import { FaArrowLeft } from 'react-icons/fa';
 import ConfigureBlock from './ConfigureBlock';
 import { sources } from '../../lib/utils';
 
@@ -44,7 +46,21 @@ function AddBlockModal(props: AddBlockModalProps): JSX.Element {
 			<ModalContent>
 				<ModalHeader>
 					<Heading as='h2' fontSize='3xl'>
-						{selectedBlock?.name ?? 'Choose a content block'}
+						{selectedBlock?.name ? (
+							<Flex alignItems='center' justifyContent='start'>
+								<IconButton
+									aria-label='Back to content blocks'
+									icon={<FaArrowLeft />}
+									onClick={() => setSelectedBlock(undefined)}
+									p={0}
+									mr={4}
+									variant='ghost'
+								/>
+								<Text>{selectedBlock?.name}</Text>
+							</Flex>
+						) : (
+							<Text>Choose a content block</Text>
+						)}
 					</Heading>
 				</ModalHeader>
 				<ModalCloseButton />
