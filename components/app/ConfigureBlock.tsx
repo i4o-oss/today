@@ -5,6 +5,7 @@ import Podcasts from '../configuration/Podcasts';
 import HackerNews from '../configuration/HackerNews';
 import Date from '../configuration/Date';
 import YearProgress from '../configuration/YearProgress';
+import Readwise from '../configuration/Readwise';
 
 interface ConfigureBlockProps {
 	block: Source;
@@ -44,6 +45,11 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 
 		case 'year-progress': {
 			currentConfigurationBlock = <YearProgress saveBlock={saveBlock} />;
+			break;
+		}
+
+		case 'readwise': {
+			currentConfigurationBlock = <Readwise saveBlock={saveBlock} />;
 			break;
 		}
 
