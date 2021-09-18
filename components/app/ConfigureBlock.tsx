@@ -6,6 +6,7 @@ import HackerNews from '../configuration/HackerNews';
 import Date from '../configuration/Date';
 import YearProgress from '../configuration/YearProgress';
 import Readwise from '../configuration/Readwise';
+import Pocket from '../configuration/Pocket';
 
 interface ConfigureBlockProps {
 	block: Source;
@@ -50,6 +51,11 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 
 		case 'readwise': {
 			currentConfigurationBlock = <Readwise saveBlock={saveBlock} />;
+			break;
+		}
+
+		case 'pocket': {
+			currentConfigurationBlock = <Pocket saveBlock={saveBlock} />;
 			break;
 		}
 
