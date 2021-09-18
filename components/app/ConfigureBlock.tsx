@@ -2,6 +2,7 @@ import { VStack } from '@chakra-ui/react';
 import { Source } from '../../lib/types';
 import RSS from '../configuration/RSS';
 import Podcasts from '../configuration/Podcasts';
+import HackerNews from '../configuration/HackerNews';
 
 interface ConfigureBlockProps {
 	block: Source;
@@ -26,6 +27,11 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 
 		case 'podcasts': {
 			currentConfigurationBlock = <Podcasts saveBlock={saveBlock} />;
+			break;
+		}
+
+		case 'hn': {
+			currentConfigurationBlock = <HackerNews saveBlock={saveBlock} />;
 			break;
 		}
 
