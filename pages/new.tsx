@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
 	chakra,
 	Button,
@@ -18,7 +18,7 @@ import Header from '../components/common/Header';
 import { reorder } from '../lib/utils';
 import AddBlockModal from '../components/app/AddBlockModal';
 import FeedSettingsModal from '../components/app/FeedSettingsModal';
-import {supabase} from "../lib/supabaseClient";
+import { supabase } from '../lib/supabaseClient';
 
 function New(): JSX.Element {
 	const {

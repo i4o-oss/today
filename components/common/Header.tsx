@@ -28,7 +28,11 @@ interface HeaderProps {
 
 function Header(props: HeaderProps): JSX.Element {
 	const { session, user } = props;
-	const { isOpen: isAuthOpen, onOpen: onAuthOpen, onClose: onAuthClose } = useDisclosure();
+	const {
+		isOpen: isAuthOpen,
+		onOpen: onAuthOpen,
+		onClose: onAuthClose,
+	} = useDisclosure();
 	const { toggleColorMode: toggleMode } = useColorMode();
 	const text = useColorModeValue('dark', 'light');
 	const SwitchIcon = useColorModeValue(FaMoon, FaSun);
@@ -120,7 +124,10 @@ function Header(props: HeaderProps): JSX.Element {
 									>
 										Sign In
 									</Button>
-									<Auth isOpen={isAuthOpen} onClose={onAuthClose} />
+									<Auth
+										isOpen={isAuthOpen}
+										onClose={onAuthClose}
+									/>
 								</>
 							)}
 						</HStack>
