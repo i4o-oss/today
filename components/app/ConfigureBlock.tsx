@@ -3,6 +3,7 @@ import { Source } from '../../lib/types';
 import RSS from '../configuration/RSS';
 import Podcasts from '../configuration/Podcasts';
 import HackerNews from '../configuration/HackerNews';
+import Date from '../configuration/Date';
 
 interface ConfigureBlockProps {
 	block: Source;
@@ -32,6 +33,11 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 
 		case 'hn': {
 			currentConfigurationBlock = <HackerNews saveBlock={saveBlock} />;
+			break;
+		}
+
+		case 'date': {
+			currentConfigurationBlock = <Date saveBlock={saveBlock} />;
 			break;
 		}
 

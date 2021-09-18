@@ -40,6 +40,18 @@ export const sources: Source[] = [
 		name: 'Podcasts',
 	},
 	{
+		id: 'date',
+		color: '#2cb67d',
+		icon: FaCalendarDay,
+		name: 'Date',
+	},
+	{
+		id: 'weather',
+		color: '#D38E10',
+		icon: FaCloudSunRain,
+		name: 'Weather',
+	},
+	{
 		id: 'youtube',
 		color: '#c4302b',
 		icon: FaYoutube,
@@ -55,18 +67,6 @@ export const sources: Source[] = [
 		id: 'readwise',
 		image: '/assets/icons/readwise.png',
 		name: 'Readwise',
-	},
-	{
-		id: 'date',
-		color: '#2cb67d',
-		icon: FaCalendarDay,
-		name: 'Date',
-	},
-	{
-		id: 'weather',
-		color: '#D38E10',
-		icon: FaCloudSunRain,
-		name: 'Weather',
 	},
 	{
 		id: 'twitter-list',
