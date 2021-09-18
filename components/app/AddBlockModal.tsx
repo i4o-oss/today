@@ -1,6 +1,10 @@
+import {useRef} from "react";
+import Image from "next/image";
 import {
+	chakra,
 	Flex,
 	Grid,
+	Icon,
 	Input,
 	Modal,
 	ModalBody,
@@ -8,9 +12,11 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalOverlay,
-	VStack
+	Text,
+	VStack,
+	useColorModeValue
 } from '@chakra-ui/react';
-import {useRef} from "react";
+import { sources } from "../../lib/utils";
 
 function AddBlockModal(props): JSX.Element {
 	const searchBlockFieldRef = useRef();
@@ -27,30 +33,20 @@ function AddBlockModal(props): JSX.Element {
 					<VStack spacing={2}>
 						<Input h='16' mb={4} ref={searchBlockFieldRef} />
 						<Grid gap={8} templateColumns='repeat(4, 1fr)' w='full'>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								RSS
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								HackerNews
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								Podcasts
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								Youtube
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								Pocket
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								Readwise
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								Date
-							</Flex>
-							<Flex w='full' h='32' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
-								Weather
-							</Flex>
+							{
+								sources.map(source => (
+									<Flex key={source.id} w='full' h='32' flexDirection='column' alignItems='center' justifyContent='center' borderStyle='solid' borderWidth={1} borderRadius='lg' cursor='pointer' shadow='md' transition='box-shadow 0.2s ease-in-out' _hover={{ shadow: 'xl' }}>
+										{
+											source.icon ?
+												<Icon as={source.icon} w={8} h={8} mb={4} color={source.color ?? useColorModeValue('gray.900', 'gray.100')} /> :
+												<chakra.span w={8} h={8} mb={4}>
+													<Image src={source.image} width={32} height={32} />
+												</chakra.span>
+										}
+										<Text>{source.name}</Text>
+									</Flex>
+								))
+							}
 						</Grid>
 					</VStack>
 				</ModalBody>

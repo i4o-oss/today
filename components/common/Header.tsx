@@ -28,7 +28,7 @@ interface HeaderProps {
 
 function Header(props: HeaderProps): JSX.Element {
 	const { session, user } = props;
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen: isAuthOpen, onOpen: onAuthOpen, onClose: onAuthClose } = useDisclosure();
 	const { toggleColorMode: toggleMode } = useColorMode();
 	const text = useColorModeValue('dark', 'light');
 	const SwitchIcon = useColorModeValue(FaMoon, FaSun);
@@ -114,13 +114,13 @@ function Header(props: HeaderProps): JSX.Element {
 								<>
 									<Button
 										colorScheme='brand'
-										onClick={onOpen}
+										onClick={onAuthOpen}
 										size='sm'
 										variant='solid'
 									>
 										Sign In
 									</Button>
-									<Auth isOpen={isOpen} onClose={onClose} />
+									<Auth isOpen={isAuthOpen} onClose={onAuthClose} />
 								</>
 							)}
 						</HStack>
