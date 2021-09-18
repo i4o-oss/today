@@ -51,7 +51,7 @@ function Pocket(props: ConfigureBlockProps): JSX.Element {
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					<Text fontSize='lg'># of Highlights</Text>
+					<Text fontSize='lg'># of Saved Articles</Text>
 				</Flex>
 				<Flex
 					w='full'
