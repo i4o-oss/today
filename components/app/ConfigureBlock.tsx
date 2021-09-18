@@ -1,16 +1,7 @@
-import { useState } from 'react';
-import {
-	Flex,
-	IconButton,
-	Input,
-	List,
-	ListItem,
-	Text,
-	VStack,
-	chakra,
-} from '@chakra-ui/react';
-import { Source } from '../../lib/utils';
+import { VStack } from '@chakra-ui/react';
+import { Source } from '../../lib/types';
 import RSS from '../configuration/RSS';
+import Podcasts from '../configuration/Podcasts';
 
 interface ConfigureBlockProps {
 	block: Source;
@@ -22,6 +13,7 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 
 	function saveBlock(data: any) {
 		console.log('Block Saved');
+		console.log(data);
 		onClose();
 	}
 
@@ -29,6 +21,11 @@ function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
 	switch (block.id) {
 		case 'rss': {
 			currentConfigurationBlock = <RSS saveBlock={saveBlock} />;
+			break;
+		}
+
+		case 'podcasts': {
+			currentConfigurationBlock = <Podcasts saveBlock={saveBlock} />;
 			break;
 		}
 

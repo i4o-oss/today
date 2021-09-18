@@ -13,12 +13,9 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { IoClose } from 'react-icons/io5';
+import { ConfigureBlockProps } from '../../lib/types';
 
-interface ConfigureRssProps {
-	saveBlock: (data: any) => void;
-}
-
-function RSS(props: ConfigureRssProps) {
+function RSS(props: ConfigureBlockProps) {
 	const [blockTitle, setBlockTitle] = useState('Latest Articles');
 	const [feedUrl, setFeedUrl] = useState('');
 	const [feeds, setFeeds] = useState([]);

@@ -10,6 +10,7 @@ import {
 	FaTwitter,
 } from 'react-icons/fa';
 import { SiTodoist } from 'react-icons/si';
+import { Source } from './types';
 
 export function reorder(list, startIndex, endIndex) {
 	const result = [...list];
@@ -17,14 +18,6 @@ export function reorder(list, startIndex, endIndex) {
 	result.splice(endIndex, 0, removed);
 
 	return result;
-}
-
-export interface Source {
-	id: string;
-	color?: string;
-	icon?: any;
-	image?: string;
-	name: string;
 }
 
 export const sources: Source[] = [
@@ -41,7 +34,7 @@ export const sources: Source[] = [
 		name: 'Hacker News',
 	},
 	{
-		id: 'podcast',
+		id: 'podcasts',
 		color: '#b150e2',
 		icon: FaPodcast,
 		name: 'Podcasts',
