@@ -4,6 +4,7 @@ import {
 	chakra,
 	Flex,
 	Grid,
+	Heading,
 	Icon,
 	Input,
 	Modal,
@@ -42,15 +43,25 @@ function AddBlockModal(props: AddBlockModalProps): JSX.Element {
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader>
-					{selectedBlock?.name ?? 'Choose a content block'}
+					<Heading as='h2' fontSize='3xl'>
+						{selectedBlock?.name ?? 'Choose a content block'}
+					</Heading>
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody mb={4}>
 					{selectedBlock ? (
-						<ConfigureBlock block={selectedBlock} />
+						<ConfigureBlock
+							block={selectedBlock}
+							onClose={props.onClose}
+						/>
 					) : (
 						<VStack spacing={2}>
-							<Input h='16' mb={4} ref={searchBlockFieldRef} />
+							<Input
+								d='none'
+								h='16'
+								mb={4}
+								ref={searchBlockFieldRef}
+							/>
 							<Grid
 								gap={8}
 								templateColumns='repeat(4, 1fr)'
