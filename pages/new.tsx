@@ -86,6 +86,60 @@ function NewFeedHeader(props: NewFeedHeaderProps): JSX.Element {
 	);
 }
 
+interface AddBlockButtonProps {
+	isAddBlockOpen: boolean;
+	onAddBlockOpen: () => void;
+	onAddBlockClose: () => void;
+	saveBlock: (blockId: string, blockData: any) => void;
+}
+
+function AddBlockButton(props: AddBlockButtonProps): JSX.Element {
+	return (
+		<Flex
+			w='full'
+			alignItems='center'
+			mt={12}
+			_before={{
+				position: 'relative',
+				top: '50%',
+				width: '50%',
+				borderTop: '1px solid',
+				borderTopColor: 'inherit',
+				transform: 'translateY(50%)',
+				content: '""',
+			}}
+			_after={{
+				position: 'relative',
+				top: '50%',
+				width: '50%',
+				borderTop: '1px solid',
+				borderTopColor: 'inherit',
+				transform: 'translateY(50%)',
+				content: '""',
+			}}
+		>
+			<IconButton
+				borderColor='gray.400'
+				borderWidth={1}
+				borderRadius='full'
+				color='gray.400'
+				fontSize='2xl'
+				mx={4}
+				p={0}
+				onClick={props.onAddBlockOpen}
+				icon={<IoAddSharp />}
+				variant='outline'
+				aria-label='Add content block'
+			/>
+			<AddBlockModal
+				isOpen={props.isAddBlockOpen}
+				onClose={props.onAddBlockClose}
+				saveBlock={props.saveBlock}
+			/>
+		</Flex>
+	);
+}
+
 function New(): JSX.Element {
 	const {
 		isOpen: isAddBlockOpen,
@@ -161,7 +215,6 @@ function New(): JSX.Element {
 				overflow='visible'
 			>
 				<NewFeedHeader togglePreview={togglePreview} />
-
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId='today'>
 						{(provided) => (
@@ -207,48 +260,12 @@ function New(): JSX.Element {
 									</Draggable>
 								))}
 								{provided.placeholder}
-								<Flex
-									w='full'
-									alignItems='center'
-									mt={12}
-									_before={{
-										position: 'relative',
-										top: '50%',
-										width: '50%',
-										borderTop: '1px solid',
-										borderTopColor: 'inherit',
-										transform: 'translateY(50%)',
-										content: '""',
-									}}
-									_after={{
-										position: 'relative',
-										top: '50%',
-										width: '50%',
-										borderTop: '1px solid',
-										borderTopColor: 'inherit',
-										transform: 'translateY(50%)',
-										content: '""',
-									}}
-								>
-									<IconButton
-										borderColor='gray.400'
-										borderWidth={1}
-										borderRadius='full'
-										color='gray.400'
-										fontSize='2xl'
-										mx={4}
-										p={0}
-										onClick={onAddBlockOpen}
-										icon={<IoAddSharp />}
-										variant='outline'
-										aria-label='Add content block'
-									/>
-									<AddBlockModal
-										isOpen={isAddBlockOpen}
-										onClose={onAddBlockClose}
-										saveBlock={saveBlock}
-									/>
-								</Flex>
+								<AddBlockButton
+									isAddBlockOpen={isAddBlockOpen}
+									onAddBlockOpen={onAddBlockOpen}
+									onAddBlockClose={onAddBlockClose}
+									saveBlock={saveBlock}
+								/>
 							</chakra.div>
 						)}
 					</Droppable>
