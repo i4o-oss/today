@@ -1,13 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-	Flex,
-	GridItem,
-	Heading,
-	Link,
-	Spinner,
-	Text,
-	useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
 import Article from '../common/Article';
 
 interface HackerNews {
