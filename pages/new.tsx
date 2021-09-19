@@ -9,10 +9,12 @@ import {
 	IconButton,
 	Input,
 	Switch,
+	Text,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { IoAddSharp, IoSettingsSharp } from 'react-icons/io5';
+import { DragHandleIcon } from '@chakra-ui/icons';
 import Container from '../components/common/Container';
 import Header from '../components/common/Header';
 import { reorder } from '../lib/utils';
@@ -20,12 +22,71 @@ import AddBlockModal from '../components/app/AddBlockModal';
 import FeedSettingsModal from '../components/app/FeedSettingsModal';
 import { supabase } from '../lib/supabaseClient';
 
-function New(): JSX.Element {
+interface NewFeedHeaderProps {
+	togglePreview: () => void;
+}
+
+function NewFeedHeader(props: NewFeedHeaderProps): JSX.Element {
 	const {
 		isOpen: isSettingsOpen,
 		onOpen: onSettingsOpen,
 		onClose: onSettingsClose,
 	} = useDisclosure();
+
+	return (
+		<Flex justifyContent='space-between' w='full' py={4} mb={8}>
+			<Input
+				variant='unstyled'
+				placeholder='Enter feed title'
+				fontSize='4xl'
+				p={0}
+			/>
+			<HStack
+				d='flex'
+				alignItems='center'
+				justifyContent='flex-end'
+				spacing={4}
+			>
+				<FormControl
+					hidden={true}
+					w='auto'
+					display='inline-flex'
+					alignItems='center'
+				>
+					<FormLabel htmlFor='preview' mb='0'>
+						Preview
+					</FormLabel>
+					<Switch
+						id='preview'
+						onChange={props.togglePreview}
+						size='md'
+					/>
+				</FormControl>
+				<>
+					<IconButton
+						borderColor='gray.400'
+						borderWidth={2}
+						color='gray.400'
+						p={0}
+						onClick={onSettingsOpen}
+						icon={<IoSettingsSharp />}
+						variant='outline'
+						aria-label='Feed Settings'
+					>
+						Settings
+					</IconButton>
+					<FeedSettingsModal
+						isOpen={isSettingsOpen}
+						onClose={onSettingsClose}
+					/>
+				</>
+				<Button colorScheme='brand'>Publish</Button>
+			</HStack>
+		</Flex>
+	);
+}
+
+function New(): JSX.Element {
 	const {
 		isOpen: isAddBlockOpen,
 		onOpen: onAddBlockOpen,
@@ -69,13 +130,13 @@ function New(): JSX.Element {
 			return;
 		}
 
-		const updatedFeeds = reorder(
+		const updatedOrder = reorder(
 			order,
 			result.source.index,
 			result.destination.index
 		);
 
-		setBlocks(updatedFeeds);
+		setOrder(updatedOrder);
 	};
 
 	const togglePreview = () => {
@@ -99,55 +160,7 @@ function New(): JSX.Element {
 				justifyContent='start'
 				overflow='visible'
 			>
-				<Flex justifyContent='space-between' w='full' py={4}>
-					<Input
-						variant='unstyled'
-						placeholder='Enter feed title'
-						fontSize='4xl'
-						p={0}
-					/>
-					<HStack
-						d='flex'
-						alignItems='center'
-						justifyContent='flex-end'
-						spacing={4}
-					>
-						<FormControl
-							hidden={true}
-							w='auto'
-							display='inline-flex'
-							alignItems='center'
-						>
-							<FormLabel htmlFor='preview' mb='0'>
-								Preview
-							</FormLabel>
-							<Switch
-								id='preview'
-								onChange={togglePreview}
-								size='md'
-							/>
-						</FormControl>
-						<>
-							<IconButton
-								borderColor='gray.400'
-								borderWidth={2}
-								color='gray.400'
-								p={0}
-								onClick={onSettingsOpen}
-								icon={<IoSettingsSharp />}
-								variant='outline'
-								aria-label='Feed Settings'
-							>
-								Settings
-							</IconButton>
-							<FeedSettingsModal
-								isOpen={isSettingsOpen}
-								onClose={onSettingsClose}
-							/>
-						</>
-						<Button colorScheme='brand'>Publish</Button>
-					</HStack>
-				</Flex>
+				<NewFeedHeader togglePreview={togglePreview} />
 
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId='today'>
@@ -158,13 +171,46 @@ function New(): JSX.Element {
 								ref={provided.innerRef}
 								{...provided.droppableProps}
 							>
-								{Object.keys(blocks).map((block, index) => (
-									<div key={index}>{`Block: ${block}`}</div>
+								{order.map((id, index) => (
+									<Draggable
+										draggableId={id}
+										index={index}
+										key={id}
+									>
+										{(provided) => (
+											<Flex
+												ref={provided.innerRef}
+												{...provided.draggableProps}
+												w='full'
+												h={32}
+												alignItems='start'
+												justifyContent='start'
+												borderWidth={1}
+												borderRadius='lg'
+												borderStyle='solid'
+												position='relative'
+												p={4}
+												mb={6}
+											>
+												<Text>{`Block: ${id}`}</Text>
+												<IconButton
+													variant='ghost'
+													{...provided.dragHandleProps}
+													position='absolute'
+													top={0}
+													left='-3rem'
+													aria-label='Drag Handle'
+													icon={<DragHandleIcon />}
+												/>
+											</Flex>
+										)}
+									</Draggable>
 								))}
+								{provided.placeholder}
 								<Flex
 									w='full'
 									alignItems='center'
-									my={4}
+									mt={12}
 									_before={{
 										position: 'relative',
 										top: '50%',
@@ -195,17 +241,14 @@ function New(): JSX.Element {
 										onClick={onAddBlockOpen}
 										icon={<IoAddSharp />}
 										variant='outline'
-										aria-label='Feed Settings'
-									>
-										Settings
-									</IconButton>
+										aria-label='Add content block'
+									/>
 									<AddBlockModal
 										isOpen={isAddBlockOpen}
 										onClose={onAddBlockClose}
 										saveBlock={saveBlock}
 									/>
 								</Flex>
-								{provided.placeholder}
 							</chakra.div>
 						)}
 					</Droppable>
