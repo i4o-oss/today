@@ -34,7 +34,8 @@ function New(): JSX.Element {
 	const [session, setSession] = useState(undefined);
 	const [user, setUser] = useState(undefined);
 	const [mode, setMode] = useState('edit');
-	const [blocks, setBlocks] = useState([]);
+	const [blocks, setBlocks] = useState({});
+	const [order, setOrder] = useState([]);
 
 	useEffect(() => {
 		setUser(supabase.auth.user());
@@ -48,6 +49,17 @@ function New(): JSX.Element {
 		setSession(supabase.auth.session());
 	}, [user]);
 
+	function saveBlock(blockId, blockData: any) {
+		const updatedBlocks = {
+			...blocks,
+			[blockId]: blockData,
+		};
+
+		setBlocks(updatedBlocks);
+		setOrder([...order, blockId]);
+		onAddBlockClose();
+	}
+
 	const onDragEnd = (result) => {
 		if (!result.destination) {
 			return;
@@ -58,7 +70,7 @@ function New(): JSX.Element {
 		}
 
 		const updatedFeeds = reorder(
-			blocks,
+			order,
 			result.source.index,
 			result.destination.index
 		);
@@ -146,7 +158,7 @@ function New(): JSX.Element {
 								ref={provided.innerRef}
 								{...provided.droppableProps}
 							>
-								{blocks.map((block, index) => (
+								{Object.keys(blocks).map((block, index) => (
 									<div key={index}>{`Block: ${block}`}</div>
 								))}
 								<Flex
@@ -190,6 +202,7 @@ function New(): JSX.Element {
 									<AddBlockModal
 										isOpen={isAddBlockOpen}
 										onClose={onAddBlockClose}
+										saveBlock={saveBlock}
 									/>
 								</Flex>
 								{provided.placeholder}

@@ -25,11 +25,17 @@ import { sources } from '../../lib/utils';
 interface AddBlockModalProps {
 	isOpen: boolean;
 	onClose: () => void;
+	saveBlock: (blockId: string, blockData: any) => void;
 }
 
 function AddBlockModal(props: AddBlockModalProps): JSX.Element {
 	const searchBlockFieldRef = useRef();
 	const [selectedBlock, setSelectedBlock] = useState(undefined);
+
+	function saveBlock(data: any) {
+		props.saveBlock(selectedBlock.id, data);
+		setSelectedBlock(undefined);
+	}
 
 	return (
 		<Modal
@@ -68,7 +74,7 @@ function AddBlockModal(props: AddBlockModalProps): JSX.Element {
 					{selectedBlock ? (
 						<ConfigureBlock
 							block={selectedBlock}
-							onClose={props.onClose}
+							saveBlock={saveBlock}
 						/>
 					) : (
 						<VStack spacing={2}>

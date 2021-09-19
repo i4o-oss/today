@@ -12,17 +12,11 @@ import Dev from '../configuration/Dev';
 
 interface ConfigureBlockProps {
 	block: Source;
-	onClose: () => void;
+	saveBlock: (data: any) => void;
 }
 
 function ConfigureBlock(props: ConfigureBlockProps): JSX.Element {
-	const { block, onClose } = props;
-
-	function saveBlock(data: any) {
-		console.log('Block Saved');
-		console.log(data);
-		onClose();
-	}
+	const { block, saveBlock } = props;
 
 	let currentConfigurationBlock = undefined;
 	switch (block.id) {
