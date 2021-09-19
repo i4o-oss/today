@@ -23,15 +23,13 @@ import DraggableBlocks from '../components/app/DraggableBlocks';
 
 interface NewFeedHeaderProps {
 	togglePreview: () => void;
+	isSettingsOpen: boolean;
+	onSettingsOpen: () => void;
+	onSettingsClose: () => void;
+	saveFeedSettings: (settings: any) => void;
 }
 
 function NewFeedHeader(props: NewFeedHeaderProps): JSX.Element {
-	const {
-		isOpen: isSettingsOpen,
-		onOpen: onSettingsOpen,
-		onClose: onSettingsClose,
-	} = useDisclosure();
-
 	return (
 		<Flex justifyContent='space-between' w='full' py={4} mb={8}>
 			<Input
@@ -67,7 +65,7 @@ function NewFeedHeader(props: NewFeedHeaderProps): JSX.Element {
 						borderWidth={2}
 						color='gray.400'
 						p={0}
-						onClick={onSettingsOpen}
+						onClick={props.onSettingsOpen}
 						icon={<IoSettingsSharp />}
 						variant='outline'
 						aria-label='Feed Settings'
@@ -75,8 +73,9 @@ function NewFeedHeader(props: NewFeedHeaderProps): JSX.Element {
 						Settings
 					</IconButton>
 					<FeedSettingsModal
-						isOpen={isSettingsOpen}
-						onClose={onSettingsClose}
+						isOpen={props.isSettingsOpen}
+						onClose={props.onSettingsClose}
+						saveFeedSettings={props.saveFeedSettings}
 					/>
 				</>
 				<Button colorScheme='brand'>Publish</Button>
@@ -145,11 +144,17 @@ function New(): JSX.Element {
 		onOpen: onAddBlockOpen,
 		onClose: onAddBlockClose,
 	} = useDisclosure();
+	const {
+		isOpen: isSettingsOpen,
+		onOpen: onSettingsOpen,
+		onClose: onSettingsClose,
+	} = useDisclosure();
 	const [session, setSession] = useState(undefined);
 	const [user, setUser] = useState(undefined);
 	const [mode, setMode] = useState('edit');
 	const [blocks, setBlocks] = useState({});
 	const [order, setOrder] = useState([]);
+	const [settings, setSettings] = useState({});
 
 	useEffect(() => {
 		setUser(supabase.auth.user());
@@ -162,6 +167,11 @@ function New(): JSX.Element {
 	useEffect(() => {
 		setSession(supabase.auth.session());
 	}, [user]);
+
+	function saveFeedSettings(settings: any) {
+		setSettings(settings);
+		onSettingsClose();
+	}
 
 	function saveBlock(blockId, blockData: any) {
 		const updatedBlocks = {
@@ -213,7 +223,13 @@ function New(): JSX.Element {
 				justifyContent='start'
 				overflow='visible'
 			>
-				<NewFeedHeader togglePreview={togglePreview} />
+				<NewFeedHeader
+					isSettingsOpen={isSettingsOpen}
+					onSettingsClose={onSettingsClose}
+					onSettingsOpen={onSettingsOpen}
+					saveFeedSettings={saveFeedSettings}
+					togglePreview={togglePreview}
+				/>
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId='today'>
 						{(provided) => (
