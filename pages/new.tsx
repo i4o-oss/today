@@ -9,18 +9,17 @@ import {
 	IconButton,
 	Input,
 	Switch,
-	Text,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { IoAddSharp, IoSettingsSharp } from 'react-icons/io5';
-import { DragHandleIcon } from '@chakra-ui/icons';
 import Container from '../components/common/Container';
 import Header from '../components/common/Header';
 import { reorder } from '../lib/utils';
 import AddBlockModal from '../components/app/AddBlockModal';
 import FeedSettingsModal from '../components/app/FeedSettingsModal';
 import { supabase } from '../lib/supabaseClient';
+import DraggableBlocks from '../components/app/DraggableBlocks';
 
 interface NewFeedHeaderProps {
 	togglePreview: () => void;
@@ -224,41 +223,7 @@ function New(): JSX.Element {
 								ref={provided.innerRef}
 								{...provided.droppableProps}
 							>
-								{order.map((id, index) => (
-									<Draggable
-										draggableId={id}
-										index={index}
-										key={id}
-									>
-										{(provided) => (
-											<Flex
-												ref={provided.innerRef}
-												{...provided.draggableProps}
-												w='full'
-												h={32}
-												alignItems='start'
-												justifyContent='start'
-												borderWidth={1}
-												borderRadius='lg'
-												borderStyle='solid'
-												position='relative'
-												p={4}
-												mb={6}
-											>
-												<Text>{`Block: ${id}`}</Text>
-												<IconButton
-													variant='ghost'
-													{...provided.dragHandleProps}
-													position='absolute'
-													top={0}
-													left='-3rem'
-													aria-label='Drag Handle'
-													icon={<DragHandleIcon />}
-												/>
-											</Flex>
-										)}
-									</Draggable>
-								))}
+								<DraggableBlocks order={order} />
 								{provided.placeholder}
 								<AddBlockButton
 									isAddBlockOpen={isAddBlockOpen}
