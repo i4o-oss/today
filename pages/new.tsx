@@ -239,7 +239,10 @@ function New(): JSX.Element {
 								ref={provided.innerRef}
 								{...provided.droppableProps}
 							>
-								<DraggableBlocks order={order} />
+								<DraggableBlocks
+									blocks={blocks}
+									order={order}
+								/>
 								{provided.placeholder}
 								<AddBlockButton
 									isAddBlockOpen={isAddBlockOpen}

@@ -5,20 +5,17 @@ import Article from '../common/Article';
 interface HackerNews {
 	name: string;
 	size: number;
-	url: string;
+	type: string;
 }
 
 export default function HackerNews(props: HackerNews): JSX.Element {
-	const { name, size, url } = props;
+	const { name, size, type } = props;
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		async function fetchArticles() {
-			const encodedUrl = encodeURIComponent(url.toString());
-			const response = await fetch(
-				`/api/hn?url=${encodedUrl}&size=${size}`
-			);
+			const response = await fetch(`/api/hn?type=${type}&size=${size}`);
 			const data = await response.json();
 			setArticles(data.active);
 		}
@@ -43,9 +40,6 @@ export default function HackerNews(props: HackerNews): JSX.Element {
 	} else if (!isLoading && articles.length > 0) {
 		BlockElement = (
 			<>
-				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
-					{name}
-				</Heading>
 				{articles.map((article, index) => (
 					<Article
 						key={index}
@@ -66,6 +60,9 @@ export default function HackerNews(props: HackerNews): JSX.Element {
 				flexDirection='column'
 				style={{ marginBottom: '8px' }}
 			>
+				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
+					{name}
+				</Heading>
 				{BlockElement}
 			</Flex>
 		</GridItem>

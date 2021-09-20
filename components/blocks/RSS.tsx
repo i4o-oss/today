@@ -4,12 +4,12 @@ import Article from '../common/Article';
 
 interface RSS {
 	feeds: string[];
-	name: string;
+	title: string;
 	size: number;
 }
 
 export default function RSS(props: RSS) {
-	const { feeds, name, size } = props;
+	const { feeds, title, size } = props;
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -55,9 +55,6 @@ export default function RSS(props: RSS) {
 	} else if (!isLoading && articles.length > 0) {
 		BlockElement = (
 			<>
-				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
-					{name}
-				</Heading>
 				{articles.map((article, index) => (
 					<Article
 						key={index}
@@ -78,6 +75,9 @@ export default function RSS(props: RSS) {
 				flexDirection='column'
 				style={{ marginBottom: '8px' }}
 			>
+				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
+					{title}
+				</Heading>
 				{BlockElement}
 			</Flex>
 		</GridItem>

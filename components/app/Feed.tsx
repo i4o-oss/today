@@ -50,7 +50,7 @@ function Feed(props: Feed): JSX.Element {
 								<RSS
 									feeds={feeds}
 									key={index}
-									name={name}
+									title={name}
 									size={size}
 								/>
 							);
@@ -58,13 +58,13 @@ function Feed(props: Feed): JSX.Element {
 
 						case 'hackernews': {
 							const { hackernews } = today?.blocks;
-							const { name, size, url } = hackernews;
+							const { name, size, type } = hackernews;
 							return (
 								<HackerNews
 									key={index}
 									name={name}
 									size={size}
-									url={url}
+									type={type}
 								/>
 							);
 						}
@@ -76,7 +76,7 @@ function Feed(props: Feed): JSX.Element {
 								<Podcasts
 									feeds={feeds}
 									key={index}
-									name={name}
+									title={name}
 									size={size}
 								/>
 							);

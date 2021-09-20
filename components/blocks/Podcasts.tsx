@@ -4,12 +4,12 @@ import Article from '../common/Article';
 
 interface Podcasts {
 	feeds: string[];
-	name: string;
+	title: string;
 	size: number;
 }
 
 export default function Podcasts(props: Podcasts) {
-	const { feeds, name, size } = props;
+	const { feeds, title, size } = props;
 	const [podcasts, setPodcasts] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -55,9 +55,6 @@ export default function Podcasts(props: Podcasts) {
 	} else if (!isLoading && podcasts.length > 0) {
 		PodcastBlockElement = (
 			<>
-				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
-					{name}
-				</Heading>
 				{podcasts.map((article, index) => (
 					<Article
 						key={index}
@@ -78,6 +75,9 @@ export default function Podcasts(props: Podcasts) {
 				flexDirection='column'
 				style={{ marginBottom: '8px' }}
 			>
+				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
+					{title}
+				</Heading>
 				{PodcastBlockElement}
 			</Flex>
 		</GridItem>

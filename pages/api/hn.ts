@@ -6,12 +6,12 @@ import { convert } from 'html-to-text';
 import today from '../../today.config';
 
 export function latestPost(req, res) {
-	const url = decodeURIComponent(req.query.url);
+	const type = req.query.type;
 	const size = req.query.size;
 	const posts = [];
 	// let meta = null;
 
-	fetch(url)
+	fetch(`https://hnrss.org/${type}`)
 		.then((feed) => {
 			const feedparser = new FeedParser();
 
