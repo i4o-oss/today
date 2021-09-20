@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { chakra } from '@chakra-ui/react';
 import Container from '../components/common/Container';
 import Header from '../components/common/Header';
 import LandingPage from '../components/common/LandingPage';
-import Feed from '../components/app/Feed';
+// import Feed from '../components/app/Feed';
 import today from '../today.config';
 import { supabase } from '../lib/supabaseClient';
+import Footer from '../components/common/Footer';
 
 function Index() {
 	const [session, setSession] = useState(undefined);
@@ -31,11 +33,23 @@ function Index() {
 	return (
 		<Container height='100vh'>
 			<Header session={session} user={user} />
-			{session ? (
-				<Feed blocks={blocks} updateBlocks={updateBlocks} />
-			) : (
+			{/*{session ? (*/}
+			{/*	<Feed blocks={blocks} updateBlocks={updateBlocks} />*/}
+			{/*) : (*/}
+			{/*	<LandingPage />*/}
+			{/*)}*/}
+			<chakra.div
+				w='full'
+				h='auto'
+				d='flex'
+				flexDirection='column'
+				alignItems='center'
+				justifyContent='flex-start'
+				flex='1 0 auto'
+			>
 				<LandingPage />
-			)}
+			</chakra.div>
+			<Footer />
 		</Container>
 	);
 }

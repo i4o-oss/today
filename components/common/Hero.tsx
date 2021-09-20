@@ -41,7 +41,7 @@ function Hero() {
 					From all the sources you care about. Articles, podcasts,
 					videos, tweets.
 				</chakra.p>
-				<SubscriptionForm />
+				<SubscriptionForm cta='Join Waitlist' />
 			</Box>
 			<Flex
 				w='100%'
