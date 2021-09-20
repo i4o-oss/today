@@ -4,7 +4,7 @@ export default {
 		hackernews: {
 			name: 'Hacker News',
 			size: 6,
-			url: 'https://hnrss.org/active',
+			type: 'active',
 		},
 		pocket: {
 			name: 'Saved on Pocket',
