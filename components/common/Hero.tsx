@@ -43,13 +43,27 @@ function Hero() {
 				</chakra.p>
 				<SubscriptionForm />
 			</Box>
-			<Box w='100%' overflow='visible'>
-				<Image
-					src='/assets/banner-thumb.png'
-					width={1126}
-					height={796}
-				/>
-			</Box>
+			<Flex
+				w='100%'
+				alignItems='center'
+				justifyContent='center'
+				overflow='visible'
+			>
+				<Box>
+					<Image
+						src='/assets/today_mockup_iphone12.png'
+						width={400}
+						height={813}
+					/>
+				</Box>
+				<Box ml={8}>
+					<Image
+						src='/assets/today_mockup_iphone12_2.png'
+						width={400}
+						height={813}
+					/>
+				</Box>
+			</Flex>
 		</Flex>
 	);
 }
