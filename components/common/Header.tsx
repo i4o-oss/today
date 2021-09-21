@@ -98,20 +98,10 @@ function Header(props: HeaderProps): JSX.Element {
 										/>
 									</MenuButton>
 									<MenuList p={0}>
-										<MenuItem>
-											<Button p={0} variant='ghost'>
-												Settings
-											</Button>
-										</MenuItem>
+										<MenuItem>Settings</MenuItem>
 										<MenuDivider m={0} />
-										<MenuItem>
-											<Button
-												onClick={handleSignOut}
-												p={0}
-												variant='ghost'
-											>
-												Sign Out
-											</Button>
+										<MenuItem onClick={handleSignOut} p={0}>
+											Sign Out
 										</MenuItem>
 									</MenuList>
 								</Menu>
