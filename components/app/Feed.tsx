@@ -49,9 +49,10 @@ function Feed(props: Feed): JSX.Element {
 							return (
 								<RSS
 									feeds={feeds}
+									filter='latest'
 									key={index}
-									title={name}
 									size={size}
+									title={name}
 								/>
 							);
 						}

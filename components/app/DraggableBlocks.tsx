@@ -26,8 +26,9 @@ function DraggableBlocks(props: DraggableBlocksProps): JSX.Element {
 						blockComponent = (
 							<RSS
 								feeds={block.feeds}
-								title={block.title}
+								filter='latest'
 								size={block.size}
+								title={block.title}
 							/>
 						);
 						break;
