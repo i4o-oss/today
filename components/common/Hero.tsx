@@ -39,7 +39,7 @@ function Hero() {
 					lineHeight='tall'
 				>
 					From all the sources you care about. Articles, podcasts,
-					videos, tweets.
+					videos, tweets and more.
 				</chakra.p>
 				<SubscriptionForm cta='Join Waitlist' />
 			</Box>
