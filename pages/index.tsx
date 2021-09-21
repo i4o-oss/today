@@ -31,7 +31,7 @@ function Index() {
 	};
 
 	return (
-		<Container height='100vh'>
+		<Container height='auto' minH='100vh'>
 			<Header session={session} user={user} />
 			<chakra.div
 				w='full'
