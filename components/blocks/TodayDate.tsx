@@ -10,22 +10,18 @@ function TodayDate(): JSX.Element {
 
 	return (
 		<GridItem colSpan={1}>
-			<HStack w='full'>
-				<Text fontSize='8xl' fontWeight='thin' color='brand.200'>
-					{format(getLocalTime(), 'd', { timeZone: today?.timezone })}
+			<HStack d='flex' alignItems='center' w='full' py={8}>
+				<Text fontSize='4xl' fontWeight='thin'>
+					{format(getLocalTime(), 'EEEE', {
+						timeZone: today?.timezone,
+					})}
+					,
 				</Text>
-				<VStack alignItems='start'>
-					<Text fontSize='3xl' fontWeight='light'>
-						{format(getLocalTime(), 'MMMM yyyy', {
-							timeZone: today?.timezone,
-						})}
-					</Text>
-					<Text fontSize='2xl' fontWeight='light'>
-						{format(getLocalTime(), 'EEEE', {
-							timeZone: today?.timezone,
-						})}
-					</Text>
-				</VStack>
+				<Text fontSize='4xl' fontWeight='thin'>
+					{format(getLocalTime(), 'd MMMM yyyy', {
+						timeZone: today?.timezone,
+					})}
+				</Text>
 			</HStack>
 		</GridItem>
 	);
