@@ -46,32 +46,28 @@ export default function RSS(props: RSS) {
 			});
 	}, []);
 
-	let BlockElement = null;
+	let RssBlockElement = null;
 	if (isLoading && articles.length === 0) {
-		BlockElement = (
+		RssBlockElement = (
 			<Flex w='full' p={4} alignItems='center' justifyContent='center'>
 				<Spinner />
 			</Flex>
 		);
 	} else if (!isLoading && articles.length > 0) {
-		BlockElement = (
-			<>
-				{articles.map((article, index) => (
-					<Article
-						key={index}
-						date={article?.latest?.date}
-						link={article?.latest?.link}
-						image={article?.cover ?? article?.meta?.image?.url}
-						siteTitle={article?.meta?.title}
-						summary={article?.latest?.summary}
-						title={article?.latest?.title}
-					/>
-				))}
-			</>
-		);
+		RssBlockElement = articles.map((article, index) => (
+			<Article
+				key={index}
+				date={article?.latest?.date}
+				link={article?.latest?.link}
+				image={article?.cover ?? article?.meta?.image?.url}
+				siteTitle={article?.meta?.title}
+				summary={article?.latest?.summary}
+				title={article?.latest?.title}
+			/>
+		));
 	}
 
-	return (
+	return RssBlockElement ? (
 		<GridItem colSpan={2}>
 			<Flex
 				w='full'
@@ -81,9 +77,9 @@ export default function RSS(props: RSS) {
 				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
 					{title}
 				</Heading>
-				{BlockElement}
+				{RssBlockElement}
 			</Flex>
 			<Divider mb={4} />
 		</GridItem>
-	);
+	) : null;
 }
