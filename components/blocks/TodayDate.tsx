@@ -9,15 +9,15 @@ function TodayDate(): JSX.Element {
 	};
 
 	return (
-		<GridItem colSpan={2}>
+		<GridItem colSpan={1}>
 			<HStack d='flex' alignItems='center' w='full' py={8}>
-				<Text fontSize='4xl' fontWeight='thin'>
+				<Text fontSize='3xl' fontWeight='thin'>
 					{format(getLocalTime(), 'EEEE', {
 						timeZone: today?.timezone,
 					})}
 					,
 				</Text>
-				<Text fontSize='4xl' fontWeight='thin'>
+				<Text fontSize='3xl' fontWeight='thin'>
 					{format(getLocalTime(), 'd MMMM yyyy', {
 						timeZone: today?.timezone,
 					})}
