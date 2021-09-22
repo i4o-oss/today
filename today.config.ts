@@ -1,6 +1,8 @@
 export default {
 	blocks: {
-		date: true,
+		date: {
+			visible: true,
+		},
 		hackernews: {
 			name: 'Hacker News',
 			size: 6,
@@ -47,7 +49,8 @@ export default {
 			size: 1,
 		},
 		weather: {
-			location: 'bangalore',
+			location: 'bengaluru',
+			unit: 'metric',
 		},
 	},
 	order: [
