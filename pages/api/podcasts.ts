@@ -6,7 +6,7 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { convert } from 'html-to-text';
 import today from '../../today.config';
 
-export function latestPost(req, res) {
+export function latestEpisode(req, res) {
 	const { filter } = req.query;
 	const url = decodeURIComponent(req.query.url);
 	const size = req.query.size;
@@ -79,4 +79,4 @@ export function latestPost(req, res) {
 		.catch((err) => console.error(err));
 }
 
-export default nc({ attachParams: true }).get(latestPost);
+export default nc({ attachParams: true }).get(latestEpisode);
