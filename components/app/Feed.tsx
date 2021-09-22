@@ -36,11 +36,21 @@ function Feed(props: Feed): JSX.Element {
 				{blocks.map((block, index) => {
 					switch (block) {
 						case 'date': {
-							return <TodayDate key={index} />;
+							const { date } = today?.blocks;
+							const { visible } = date;
+							return <TodayDate key={index} visible={visible} />;
 						}
 
 						case 'weather': {
-							return <Weather key={index} />;
+							const { weather } = today?.blocks;
+							const { location, unit } = weather;
+							return (
+								<Weather
+									key={index}
+									location={location}
+									unit={unit}
+								/>
+							);
 						}
 
 						case 'rss': {
