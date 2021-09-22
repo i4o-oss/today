@@ -8,7 +8,7 @@ import today from '../today.config';
 import { supabase } from '../lib/supabaseClient';
 import Footer from '../components/common/Footer';
 
-function Index() {
+function Index(): JSX.Element {
 	const [session, setSession] = useState(undefined);
 	const [user, setUser] = useState(undefined);
 	const [blocks, setBlocks] = useState(today?.order);
