@@ -24,7 +24,7 @@ function Feed(props: Feed): JSX.Element {
 			justifyContent='start'
 			overflow='visible'
 		>
-			<Heading as='h1' fontSize='8xl' fontWeight='thin' mb={16}>
+			<Heading as='h1' fontSize='6xl' fontWeight='thin' mb={8}>
 				Today
 			</Heading>
 			<Grid
