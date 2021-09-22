@@ -49,7 +49,7 @@ function Feed(props: Feed): JSX.Element {
 							return (
 								<RSS
 									feeds={feeds}
-									filter='latest'
+									filter='today'
 									key={index}
 									size={size}
 									title={name}
@@ -76,9 +76,10 @@ function Feed(props: Feed): JSX.Element {
 							return (
 								<Podcasts
 									feeds={feeds}
+									filter='today'
 									key={index}
-									title={name}
 									size={size}
+									title={name}
 								/>
 							);
 						}

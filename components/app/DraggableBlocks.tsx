@@ -38,8 +38,9 @@ function DraggableBlocks(props: DraggableBlocksProps): JSX.Element {
 						blockComponent = (
 							<Podcasts
 								feeds={block.feeds}
-								title={block.title}
+								filter='latest'
 								size={block.size}
+								title={block.title}
 							/>
 						);
 						break;

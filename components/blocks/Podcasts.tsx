@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
+import { Divider, Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
 import Article from '../common/Article';
 
 interface Podcasts {
 	feeds: string[];
-	title: string;
+	filter: string;
 	size: number;
+	title: string;
 }
 
 export default function Podcasts(props: Podcasts) {
-	const { feeds, title, size } = props;
+	const { feeds, filter, size, title } = props;
 	const [podcasts, setPodcasts] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -19,12 +20,12 @@ export default function Podcasts(props: Podcasts) {
 				feeds.map(async (url) => {
 					const encodedUrl = encodeURIComponent(url.toString());
 					const response = await fetch(
-						`/api/podcasts?url=${encodedUrl}&size=${size}`
+						`/api/podcasts?url=${encodedUrl}&size=${size}&filter=${filter}`
 					);
 					const data = await response.json();
 
-					if (data.latest) {
-						return data.latest;
+					if (data.latest && data.meta) {
+						return data;
 					}
 
 					return null;
@@ -53,22 +54,20 @@ export default function Podcasts(props: Podcasts) {
 			</Flex>
 		);
 	} else if (!isLoading && podcasts.length > 0) {
-		PodcastBlockElement = (
-			<>
-				{podcasts.map((article, index) => (
-					<Article
-						key={index}
-						date={article?.date}
-						link={article?.link}
-						summary={article?.summary}
-						title={article?.title}
-					/>
-				))}
-			</>
-		);
+		PodcastBlockElement = podcasts.map((episode, index) => (
+			<Article
+				key={index}
+				date={episode?.latest?.date}
+				link={episode?.latest?.link}
+				image={episode?.meta?.image?.url}
+				siteTitle={episode?.meta?.title}
+				summary={episode?.latest?.summary}
+				title={episode?.latest?.title}
+			/>
+		));
 	}
 
-	return (
+	return PodcastBlockElement ? (
 		<GridItem colSpan={2}>
 			<Flex
 				w='full'
@@ -80,6 +79,7 @@ export default function Podcasts(props: Podcasts) {
 				</Heading>
 				{PodcastBlockElement}
 			</Flex>
+			<Divider mb={4} />
 		</GridItem>
-	);
+	) : null;
 }
