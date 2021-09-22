@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
+import { Divider, Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
 import Article from '../common/Article';
 
 interface HackerNews {
@@ -65,6 +65,7 @@ export default function HackerNews(props: HackerNews): JSX.Element {
 				</Heading>
 				{BlockElement}
 			</Flex>
+			<Divider mb={4} />
 		</GridItem>
 	);
 }
