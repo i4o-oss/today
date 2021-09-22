@@ -5,7 +5,7 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { convert } from 'html-to-text';
 import today from '../../today.config';
 
-export function latestPost(req, res) {
+export function latestHnPosts(req, res) {
 	const type = req.query.type;
 	const size = req.query.size;
 	const posts = [];
@@ -53,4 +53,4 @@ export function latestPost(req, res) {
 		.catch((err) => console.error(err));
 }
 
-export default nc({ attachParams: true }).get(latestPost);
+export default nc({ attachParams: true }).get(latestHnPosts);

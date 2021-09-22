@@ -1,6 +1,8 @@
 export default {
 	blocks: {
-		date: true,
+		date: {
+			visible: true,
+		},
 		hackernews: {
 			name: 'Hacker News',
 			size: 6,
@@ -41,14 +43,14 @@ export default {
 				'https://thesephist.com/index.xml',
 				'http://dailystoic.com/feed/',
 				'https://www.lpalmieri.com/rss.xml',
-				'https://www.lpalmieri.com/rss.xml',
 				'https://fasterthanli.me/index.xml',
 			],
 			name: 'Latest Articles',
 			size: 1,
 		},
 		weather: {
-			location: 'bangalore',
+			location: 'bengaluru',
+			unit: 'metric',
 		},
 	},
 	order: [

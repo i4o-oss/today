@@ -6,11 +6,12 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { convert } from 'html-to-text';
 import today from '../../today.config';
 
-export function latestPost(req, res) {
+export function latestEpisode(req, res) {
+	const { filter } = req.query;
 	const url = decodeURIComponent(req.query.url);
 	const size = req.query.size;
 	const episodes = [];
-	// let meta = null;
+	let podcastMetadata = null;
 
 	fetch(url)
 		.then((feed) => {
@@ -19,9 +20,9 @@ export function latestPost(req, res) {
 			feedparser.on('error', function (err) {
 				console.log(err);
 			});
-			// feedparser.on('meta', function(meta) {
-			//     console.log(meta);
-			// });
+			feedparser.on('meta', function (meta) {
+				podcastMetadata = meta;
+			});
 			feedparser.on('readable', function () {
 				let episode;
 				// eslint-disable-next-line no-cond-assign
@@ -49,15 +50,27 @@ export function latestPost(req, res) {
 				const todayStart = getUnixTime(startOfDay(now));
 				const todayEnd = getUnixTime(endOfDay(now));
 
-				const latest = episodes.filter((episode) => {
-					const postPublishDate = getUnixTime(episode?.date);
-					return (
-						postPublishDate >= todayStart &&
-						postPublishDate <= todayEnd
-					);
-				});
+				if (filter === 'latest') {
+					const latest = episodes.slice(0, size);
 
-				res.status(200).json({ latest: latest[0] });
+					res.status(200).json({
+						latest: latest[0],
+						meta: podcastMetadata,
+					});
+				} else if (filter === 'today') {
+					const today = episodes.filter((episode) => {
+						const postPublishDate = getUnixTime(episode?.date);
+						return (
+							postPublishDate >= todayStart &&
+							postPublishDate <= todayEnd
+						);
+					});
+
+					res.status(200).json({
+						latest: today[0],
+						meta: podcastMetadata,
+					});
+				}
 			});
 
 			const response = feed.body;
@@ -66,4 +79,4 @@ export function latestPost(req, res) {
 		.catch((err) => console.error(err));
 }
 
-export default nc({ attachParams: true }).get(latestPost);
+export default nc({ attachParams: true }).get(latestEpisode);

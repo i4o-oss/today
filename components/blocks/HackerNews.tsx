@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
+import { Divider, Flex, GridItem, Heading, Spinner } from '@chakra-ui/react';
 import Article from '../common/Article';
 
 interface HackerNews {
@@ -30,27 +30,23 @@ export default function HackerNews(props: HackerNews): JSX.Element {
 			});
 	}, []);
 
-	let BlockElement = null;
+	let HackerNewsBlockElement = null;
 	if (isLoading && articles.length === 0) {
-		BlockElement = (
+		HackerNewsBlockElement = (
 			<Flex w='full' p={4} alignItems='center' justifyContent='center'>
 				<Spinner />
 			</Flex>
 		);
 	} else if (!isLoading && articles.length > 0) {
-		BlockElement = (
-			<>
-				{articles.map((article, index) => (
-					<Article
-						key={index}
-						date={article?.date}
-						link={article?.link}
-						summary=''
-						title={article?.title}
-					/>
-				))}
-			</>
-		);
+		HackerNewsBlockElement = articles.map((article, index) => (
+			<Article
+				key={index}
+				date={article?.date}
+				link={article?.link}
+				summary=''
+				title={article?.title}
+			/>
+		));
 	}
 
 	return (
@@ -63,8 +59,9 @@ export default function HackerNews(props: HackerNews): JSX.Element {
 				<Heading as='h2' size='xl' fontWeight='semibold' mb={4}>
 					{name}
 				</Heading>
-				{BlockElement}
+				{HackerNewsBlockElement}
 			</Flex>
+			<Divider mb={4} />
 		</GridItem>
 	);
 }

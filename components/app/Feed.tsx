@@ -24,7 +24,7 @@ function Feed(props: Feed): JSX.Element {
 			justifyContent='start'
 			overflow='visible'
 		>
-			<Heading as='h1' fontSize='8xl' fontWeight='thin' mb={16}>
+			<Heading as='h1' fontSize='6xl' fontWeight='thin' mb={8}>
 				Today
 			</Heading>
 			<Grid
@@ -36,11 +36,21 @@ function Feed(props: Feed): JSX.Element {
 				{blocks.map((block, index) => {
 					switch (block) {
 						case 'date': {
-							return <TodayDate key={index} />;
+							const { date } = today?.blocks;
+							const { visible } = date;
+							return <TodayDate key={index} visible={visible} />;
 						}
 
 						case 'weather': {
-							return <Weather key={index} />;
+							const { weather } = today?.blocks;
+							const { location, unit } = weather;
+							return (
+								<Weather
+									key={index}
+									location={location}
+									unit={unit}
+								/>
+							);
 						}
 
 						case 'rss': {
@@ -49,9 +59,10 @@ function Feed(props: Feed): JSX.Element {
 							return (
 								<RSS
 									feeds={feeds}
+									filter='today'
 									key={index}
-									title={name}
 									size={size}
+									title={name}
 								/>
 							);
 						}
@@ -75,9 +86,10 @@ function Feed(props: Feed): JSX.Element {
 							return (
 								<Podcasts
 									feeds={feeds}
+									filter='today'
 									key={index}
-									title={name}
 									size={size}
+									title={name}
 								/>
 							);
 						}

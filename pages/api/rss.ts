@@ -7,9 +7,11 @@ import { convert } from 'html-to-text';
 import today from '../../today.config';
 
 export function latestPost(req, res) {
+	const { filter } = req.query;
+	const size = parseInt(req.query.size, 10);
 	const url = decodeURIComponent(req.query.url);
 	const posts = [];
-	// let meta = null;
+	let siteMetadata = null;
 
 	fetch(url)
 		.then((feed) => {
@@ -18,9 +20,9 @@ export function latestPost(req, res) {
 			feedparser.on('error', function (err) {
 				console.log(err);
 			});
-			// feedparser.on('meta', function(meta) {
-			//     console.log(meta);
-			// });
+			feedparser.on('meta', function (meta) {
+				siteMetadata = meta;
+			});
 			feedparser.on('readable', function () {
 				let post;
 				// eslint-disable-next-line no-cond-assign
@@ -34,10 +36,11 @@ export function latestPost(req, res) {
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 						// @ts-ignore
 						posts.push({
-							title: post.title,
 							date: publishDateInLocalTime,
+							cover: post.image.url,
 							link: post.link,
 							summary: convert(post.summary),
+							title: post.title,
 						});
 					}
 				}
@@ -48,15 +51,27 @@ export function latestPost(req, res) {
 				const todayStart = getUnixTime(startOfDay(now));
 				const todayEnd = getUnixTime(endOfDay(now));
 
-				const latest = posts.filter((post) => {
-					const postPublishDate = getUnixTime(post?.date);
-					return (
-						postPublishDate >= todayStart &&
-						postPublishDate <= todayEnd
-					);
-				});
+				if (filter === 'latest') {
+					const latest = posts.slice(0, size);
 
-				res.status(200).json({ latest: latest[0] });
+					res.status(200).json({
+						latest: latest[0],
+						meta: siteMetadata,
+					});
+				} else if (filter === 'today') {
+					const today = posts.filter((post) => {
+						const postPublishDate = getUnixTime(post?.date);
+						return (
+							postPublishDate >= todayStart &&
+							postPublishDate <= todayEnd
+						);
+					});
+
+					res.status(200).json({
+						latest: today[0],
+						meta: siteMetadata,
+					});
+				}
 			});
 
 			const response = feed.body;

@@ -82,55 +82,45 @@ function Header(props: HeaderProps): JSX.Element {
 								onClick={toggleMode}
 								icon={<SwitchIcon />}
 							/>
-							{/*{session && user ? (*/}
-							{/*	<Menu placement='bottom-end'>*/}
-							{/*		<MenuButton*/}
-							{/*			as={Button}*/}
-							{/*			p={0}*/}
-							{/*			bg='transparent'*/}
-							{/*			_hover={{ bg: 'transparent' }}*/}
-							{/*			_active={{ bg: 'transparent' }}*/}
-							{/*			_focus={{ bg: 'transparent' }}*/}
-							{/*		>*/}
-							{/*			<Avatar*/}
-							{/*				size='sm'*/}
-							{/*				name='Ilango Rajagopal'*/}
-							{/*			/>*/}
-							{/*		</MenuButton>*/}
-							{/*		<MenuList p={0}>*/}
-							{/*			<MenuItem>*/}
-							{/*				<Button p={0} variant='ghost'>*/}
-							{/*					Settings*/}
-							{/*				</Button>*/}
-							{/*			</MenuItem>*/}
-							{/*			<MenuDivider m={0} />*/}
-							{/*			<MenuItem>*/}
-							{/*				<Button*/}
-							{/*					onClick={handleSignOut}*/}
-							{/*					p={0}*/}
-							{/*					variant='ghost'*/}
-							{/*				>*/}
-							{/*					Sign Out*/}
-							{/*				</Button>*/}
-							{/*			</MenuItem>*/}
-							{/*		</MenuList>*/}
-							{/*	</Menu>*/}
-							{/*) : (*/}
-							{/*	<>*/}
-							{/*		<Button*/}
-							{/*			colorScheme='brand'*/}
-							{/*			onClick={onAuthOpen}*/}
-							{/*			size='sm'*/}
-							{/*			variant='solid'*/}
-							{/*		>*/}
-							{/*			Sign In*/}
-							{/*		</Button>*/}
-							{/*		<Auth*/}
-							{/*			isOpen={isAuthOpen}*/}
-							{/*			onClose={onAuthClose}*/}
-							{/*		/>*/}
-							{/*	</>*/}
-							{/*)}*/}
+							{session && user ? (
+								<Menu placement='bottom-end'>
+									<MenuButton
+										as={Button}
+										p={0}
+										bg='transparent'
+										_hover={{ bg: 'transparent' }}
+										_active={{ bg: 'transparent' }}
+										_focus={{ bg: 'transparent' }}
+									>
+										<Avatar
+											size='sm'
+											name='Ilango Rajagopal'
+										/>
+									</MenuButton>
+									<MenuList p={0}>
+										<MenuItem>Settings</MenuItem>
+										<MenuDivider m={0} />
+										<MenuItem onClick={handleSignOut} p={0}>
+											Sign Out
+										</MenuItem>
+									</MenuList>
+								</Menu>
+							) : (
+								<>
+									<Button
+										colorScheme='brand'
+										onClick={onAuthOpen}
+										size='sm'
+										variant='solid'
+									>
+										Sign In
+									</Button>
+									<Auth
+										isOpen={isAuthOpen}
+										onClose={onAuthClose}
+									/>
+								</>
+							)}
 						</HStack>
 					</Flex>
 				</Flex>

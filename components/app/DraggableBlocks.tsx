@@ -1,5 +1,5 @@
 import { Draggable } from 'react-beautiful-dnd';
-import { Flex, Grid, IconButton, Text } from '@chakra-ui/react';
+import { Flex, Grid, IconButton } from '@chakra-ui/react';
 import { DragHandleIcon } from '@chakra-ui/icons';
 import RSS from '../blocks/RSS';
 import HackerNews from '../blocks/HackerNews';
@@ -26,8 +26,9 @@ function DraggableBlocks(props: DraggableBlocksProps): JSX.Element {
 						blockComponent = (
 							<RSS
 								feeds={block.feeds}
-								title={block.title}
+								filter='latest'
 								size={block.size}
+								title={block.title}
 							/>
 						);
 						break;
@@ -37,20 +38,26 @@ function DraggableBlocks(props: DraggableBlocksProps): JSX.Element {
 						blockComponent = (
 							<Podcasts
 								feeds={block.feeds}
-								title={block.title}
+								filter='latest'
 								size={block.size}
+								title={block.title}
 							/>
 						);
 						break;
 					}
 
 					case 'date': {
-						blockComponent = <TodayDate />;
+						blockComponent = <TodayDate visible={block.visible} />;
 						break;
 					}
 
 					case 'weather': {
-						blockComponent = <Weather />;
+						blockComponent = (
+							<Weather
+								location={block.location}
+								unit={block.unit}
+							/>
+						);
 						break;
 					}
 
