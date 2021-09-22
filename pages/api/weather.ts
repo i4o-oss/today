@@ -1,10 +1,10 @@
 import nc from 'next-connect';
 
 export async function currentWeather(req, res) {
-	const { lat, lon, city } = req.query;
+	const { lat, lon, city, unit } = req.query;
 
 	if (lat && lon) {
-		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OWM_API_KEY}`;
+		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${process.env.OWM_API_KEY}`;
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -15,7 +15,7 @@ export async function currentWeather(req, res) {
 		const weather = await response.json();
 		res.status(200).json({ weather });
 	} else if (city) {
-		const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&exclude=minutely,hourly,alerts&appid=${process.env.OWM_API_KEY}`;
+		const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&exclude=minutely,hourly,alerts&units=${unit}&appid=${process.env.OWM_API_KEY}`;
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {

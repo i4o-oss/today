@@ -7,6 +7,7 @@ import {
 	IconButton,
 	Input,
 	InputGroup,
+	Select,
 	Text,
 	VStack,
 } from '@chakra-ui/react';
@@ -14,7 +15,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import { ConfigureBlockProps } from '../../lib/types';
 
 function Weather(props: ConfigureBlockProps): JSX.Element {
-	const [blockTitle, setBlockTitle] = useState('Weather');
+	const [unit, setUnit] = useState('metric');
 	const [city, setCity] = useState('');
 	const [coordinates, setCoordinates] = useState(undefined);
 	// const [loading, setLoading] = useState(false);
@@ -44,8 +45,8 @@ function Weather(props: ConfigureBlockProps): JSX.Element {
 
 	function saveWeatherBlock() {
 		const data = {
-			coordinates,
-			title: blockTitle,
+			location: coordinates ?? city,
+			unit,
 		};
 		props.saveBlock(data);
 	}
@@ -107,18 +108,21 @@ function Weather(props: ConfigureBlockProps): JSX.Element {
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					<Text fontSize='lg'>Block Title</Text>
+					<Text fontSize='lg'>Unit</Text>
 				</Flex>
 				<Flex
 					w='full'
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					<Input
+					<Select
 						h={12}
-						onChange={(e) => setBlockTitle(e.target.value)}
-						value={blockTitle}
-					/>
+						onChange={(e) => setUnit(e.target.value)}
+						value={unit}
+					>
+						<option value='metric'>Celsius</option>
+						<option value='imperial'>Fahrenheit</option>
+					</Select>
 				</Flex>
 			</Grid>
 			<Flex w='full' alignItems='center' justifyContent='end'>
