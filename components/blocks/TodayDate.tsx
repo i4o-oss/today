@@ -9,7 +9,7 @@ function TodayDate(): JSX.Element {
 	};
 
 	return (
-		<GridItem colSpan={1}>
+		<GridItem colSpan={2}>
 			<HStack d='flex' alignItems='center' w='full' py={8}>
 				<Text fontSize='4xl' fontWeight='thin'>
 					{format(getLocalTime(), 'EEEE', {
