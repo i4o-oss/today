@@ -79,7 +79,7 @@ function SubscriptionForm(props) {
 									type='submit'
 									name='join_waitlist'
 									id='join_waitlist'
-									loading={loading}
+									isLoading={loading}
 								>
 									{props?.cta || 'Subscribe'}
 								</Button>

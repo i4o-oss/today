@@ -25,21 +25,20 @@ function Hero() {
 			>
 				<chakra.h1
 					mb={4}
-					fontSize={{ base: '3xl', md: '4xl' }}
+					fontSize='4xl'
 					fontWeight='bold'
 					lineHeight='tall'
 					color={useColorModeValue('gray.900', 'white')}
 				>
 					Personalized digest delivered to your inbox everyday.
 				</chakra.h1>
-				<chakra.p
-					mb={12}
-					color='gray.500'
-					fontSize='xl'
-					lineHeight='tall'
-				>
+				<chakra.p mb={12} fontSize='2xl' lineHeight='tall'>
 					From all the sources you care about. Articles, podcasts,
 					videos, tweets and more.
+				</chakra.p>
+				<chakra.p mb={6} fontSize='xl' lineHeight='tall'>
+					First 100 people to sign up for the early access will get
+					lifetime access for free.
 				</chakra.p>
 				<SubscriptionForm cta='Join Waitlist' />
 			</Box>
